@@ -24,14 +24,13 @@ function sw3RenderFrame(){
  let settled=false;
  function finish(){if(settled||token!==sw3FrameToken)return;settled=true;layer.setOpacity(.78);if(sw3Radar&&sw3Radar!==layer&&sw3Map.hasLayer(sw3Radar))sw3Map.removeLayer(sw3Radar);sw3Radar=layer;sw3Pending=null;sw3('radarStatus').textContent='Radar observation: '+new Date(frame.time*1000).toLocaleString()+' · Past observations, not a forecast';window.dispatchEvent(new CustomEvent('stormwatch:radarframe',{detail:{index:sw3Index,count:sw3Frames.length,time:frame.time}}));sw3PreloadNext()}
  layer.once('load',finish);
- if(layer._loading===false)setTimeout(finish,50);
+ if(sw3Radar===layer)setTimeout(finish,50);
  setTimeout(finish,Math.min(2200,Math.max(1100,sw3Speed-100)));
 }
 function sw3PreloadNext(){
  if(!sw3Map||!sw3Frames.length||document.hidden)return;
  const next=(sw3Index+1)%sw3Frames.length,layer=sw3Layer(next);
- if(!sw3Map.hasLayer(layer))layer.addTo(sw3Map);
- layer.setOpacity(0);
+ if(layer!==sw3Radar){layer.setOpacity(0);if(!sw3Map.hasLayer(layer))layer.addTo(sw3Map)}
  const keep=new Set([String(sw3Frames[sw3Index].time),String(sw3Frames[next].time)]);
  for(const [key,old] of sw3Layers){if(!keep.has(key)){if(sw3Map.hasLayer(old))sw3Map.removeLayer(old);sw3Layers.delete(key)}}
 }
@@ -54,7 +53,7 @@ async function sw3RadarLoad(preserve=false){
  finally{sw3Loading=false}
 }
 function sw3Pause(){if(sw3Timer){clearInterval(sw3Timer);sw3Timer=null}sw3('radarPlay').textContent='▶ Play'}
-function sw3Play(){if(sw3Timer){sw3Pause();return}if(sw3Frames.length<2){sw3('radarStatus').textContent='Animation requires at least two radar frames.';return}sw3Step(1);sw3Timer=setInterval(()=>{if(!document.hidden&&document.body.dataset.screen==='radar')sw3Step(1)},sw3Speed);sw3('radarPlay').textContent='⏸ Pause'}
+function sw3Play(){if(sw3Timer){sw3Pause();return}if(document.body.dataset.screen!=='radar'){sw3('radarStatus').textContent='Open the Radar tab to play animation.';return}if(sw3Frames.length<2){sw3('radarStatus').textContent='Animation requires at least two radar frames.';return}sw3Step(1);sw3Timer=setInterval(()=>{if(!document.hidden&&document.body.dataset.screen==='radar')sw3Step(1)},sw3Speed);sw3('radarPlay').textContent='⏸ Pause'}
 function sw3SetSpeed(ms){sw3Speed=ms;if(sw3Timer){sw3Pause();sw3Play()}}
 function sw3Step(delta){if(!sw3Frames.length)return;sw3Index=(sw3Index+delta+sw3Frames.length)%sw3Frames.length;sw3RenderFrame()}
 sw3('radarPrev').addEventListener('click',()=>sw3Step(-1));sw3('radarNext').addEventListener('click',()=>sw3Step(1));sw3('radarHome').addEventListener('click',()=>{if(sw3Map&&sw3Location)sw3Map.setView([sw3Location.lat,sw3Location.lon],8)});
@@ -67,3 +66,7 @@ setInterval(()=>{if(navigator.onLine!==false&&!document.hidden)sw3RadarLoad(true
 window.addEventListener('resize',()=>{if(sw3Map)sw3Map.invalidateSize({pan:false})});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&sw3Map)setTimeout(()=>sw3Map.invalidateSize({pan:false}),200)});
 document.getElementById('radarPanel')?.addEventListener('click',event=>{if(event.target.closest('.panel-toggle')&&sw3Map)setTimeout(()=>sw3Map.invalidateSize({pan:false}),250)});
+
+/* Safari: suspend animation in the background and resize after returning. */
+document.addEventListener('visibilitychange',()=>{if(document.hidden)sw3Pause();else if(document.body.dataset.screen==='radar'&&sw3Map)setTimeout(()=>sw3Map.invalidateSize({pan:false}),250)});
+window.addEventListener('pagehide',sw3Pause);
