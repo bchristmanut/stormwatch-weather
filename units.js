@@ -10,9 +10,9 @@ const valid=n=>typeof n==='number'&&Number.isFinite(n);
 const temp=n=>valid(n)?Math.round(prefs.temp==='C'?(n-32)*5/9:n)+'°'+prefs.temp:'—';
 const wind=n=>valid(n)?Math.round(prefs.wind==='kmh'?n*1.609344:n)+' '+prefs.wind:'—';
 const rain=n=>valid(n)?(prefs.rain==='mm'?n*25.4:n).toFixed(prefs.rain==='mm'?1:2)+' '+prefs.rain:'—';
-const put=(selector,value)=>{const node=document.querySelector(selector);if(node)node.textContent=value};
+const convertTemp=n=>valid(n)?Math.round(prefs.temp==='C'?(n-32)*5/9:n):null;const put=(selector,value)=>{const node=document.querySelector(selector);if(node)node.textContent=value};
 for(const [key,label,options] of choices){const row=document.createElement('label');row.className='sw60-option';row.append(document.createTextNode(label));const select=document.createElement('select');select.setAttribute('aria-label',label);for(const [value,title] of options){const option=document.createElement('option');option.value=value;option.textContent=title;select.append(option)}select.value=options.some(([v])=>v===prefs[key])?prefs[key]:defaults[key];prefs[key]=select.value;select.addEventListener('change',()=>{prefs[key]=select.value;try{localStorage.setItem(KEY,JSON.stringify(prefs))}catch{}render()});row.append(select);wrap.append(row)}
-panel.append(wrap);
+const presets=document.createElement('div');presets.className='sw62-presets';for(const [name,values] of [['Imperial',{temp:'F',wind:'mph',rain:'in'}],['Metric',{temp:'C',wind:'kmh',rain:'mm'}]]){const button=document.createElement('button');button.type='button';button.textContent=name;button.addEventListener('click',()=>{Object.assign(prefs,values);wrap.querySelectorAll('select').forEach((select,i)=>{select.value=prefs[choices[i][0]]});try{localStorage.setItem(KEY,JSON.stringify(prefs))}catch{}render()});presets.append(button)}wrap.insertBefore(presets,hint.nextSibling);panel.append(wrap);
 function render(){if(!latest)return;const d=latest,h=d.hourly||{},day=d.daily||{},c=d.current||{};
 put('#temp',valid(c.temperature_2m)?Math.round(prefs.temp==='C'?(c.temperature_2m-32)*5/9:c.temperature_2m):'—');
 put('#range','H: '+temp(day.temperature_2m_max?.[0])+'  L: '+temp(day.temperature_2m_min?.[0]));
