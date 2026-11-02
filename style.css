@@ -279,3 +279,8 @@ body[data-screen=home] #rainPanel .rain-intelligence{margin-top:8px}
 #radarPanel.rp-fullscreen #radarMap{height:calc(100dvh - 310px)!important;min-height:250px;max-height:none}
 body.rp-modal{overflow:hidden}
 @media(max-height:650px){#radarPanel.rp-fullscreen #radarMap{height:45dvh!important;min-height:200px}}
+
+/* Reliability feedback */
+#status{border-radius:12px;transition:background .2s,color .2s}
+#status.storm-stale{padding:10px 12px;background:#e6a04428;border:1px solid #ffcb7b88;color:#ffe3a6;font-weight:650}
+#refresh:disabled{opacity:.45;cursor:wait}
