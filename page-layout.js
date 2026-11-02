@@ -11,6 +11,7 @@ const screens=[
 const pages=new Map();
 const sw51Ready=true;
 const sw51Grid=document.createElement('section');sw51Grid.className='sw51-bento';
+const sw51Values={};for(const key of ['UV Index','Wind','Humidity','Sunrise']){const tile=document.createElement('article');tile.className='sw51-tile';const label=document.createElement('span');label.textContent=key;const value=document.createElement('strong');value.textContent='—';tile.append(label,value);sw51Grid.append(tile);sw51Values[key]=value}
 for(const item of screens){
  const page=document.createElement('section');page.className='sw-page';page.id='sw-page-'+item.id;page.dataset.page=item.id;page.setAttribute('aria-label',item.title);
  const head=document.createElement('div');head.className='sw-page-heading';
