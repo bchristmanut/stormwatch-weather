@@ -528,3 +528,5 @@ body .sw-page>.panel{background:rgba(255,255,255,.1)!important;backdrop-filter:b
 body[data-sky=clear]{background:linear-gradient(#247bb9,#07182c) fixed}body[data-sky=rain]{background:linear-gradient(#344d68,#091b30) fixed}body[data-sky=storm]{background:linear-gradient(#373c65,#0b1329) fixed}body[data-sky=night]{background:linear-gradient(#17264e,#070f25) fixed}
 
 #hourly{overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}#hourly .hour{scroll-snap-align:start}#daily .day[hidden]{display:none!important}
+
+.sw51-bento{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.sw51-tile{padding:16px;min-height:130px;background:#ffffff19;border:1px solid #ffffff33;border-radius:20px;backdrop-filter:blur(16px)}
