@@ -29,5 +29,8 @@ window.addEventListener('stormwatch:updated',e=>{refreshSize();fetchWarnings(e.d
 window.addEventListener('stormwatch:radarready',update);window.addEventListener('stormwatch:radarframe',update);
 const observer=new MutationObserver(()=>{if(document.body.dataset.screen==='radar')refreshSize()});observer.observe(document.body,{attributes:true,attributeFilter:['data-screen']});
 window.addEventListener('resize',refreshSize);
+window.addEventListener('orientationchange',()=>setTimeout(refreshSize,300));
+window.addEventListener('pageshow',refreshSize);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshSize()});
 setTimeout(()=>{refreshSize();update()},400);
 })();
