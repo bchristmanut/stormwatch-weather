@@ -13,11 +13,11 @@ const rows=[];for(let i=start;i<end;i++)rows.push({time:h.time[i],chance:h.preci
 cards.replaceChildren();hours.replaceChildren();if(!rows.length){status.textContent='Hourly forecast is temporarily unavailable.';return}
 const wet=rows.filter(x=>(valid(x.chance)&&x.chance>=40)||(valid(x.amount)&&x.amount>=0.01)),first=wet[0],amountRows=rows.filter(x=>valid(x.amount)),total=amountRows.reduce((s,x)=>s+Math.max(0,x.amount),0),peak=rows.reduce((a,x)=>valid(x.chance)&&(!a||x.chance>a.chance)?x:a,null);
 const temps=rows.filter(x=>valid(x.temp)),change=valid(rows[0]?.temp)&&valid(rows.at(-1)?.temp)?rows.at(-1).temp-rows[0].temp:null;
-status.textContent=first?'Possible precipitation around '+hourLabel(first.time)+' (at least 40% chance or 0.01 in forecast).':'No significant precipitation signal in the available hourly forecast.';
+status.textContent=first?'Possible precipitation around '+hourLabel(first.time)+' (at least 40% chance or 0.01 in forecast).':rows.some(x=>valid(x.chance)||valid(x.amount))?'No significant precipitation signal in the available hourly forecast.':'Precipitation data unavailable for this location.';
 card('Possible precipitation',first?hourLabel(first.time):'Not indicated','Chance ≥40% or amount ≥0.01 in');
 card('Peak precipitation chance',peak?Math.round(peak.chance)+'%':'—',peak?hourLabel(peak.time):'No probability data');
 card('Expected precipitation',amountRows.length===rows.length?total.toFixed(2)+' in':'—',amountRows.length===rows.length?'Forecast total, next 12 hours':'Incomplete hourly amount data');
-card('Temperature trend',change===null?'—':(change>0?'+':'')+Math.round(change)+'°F',temps.length>1?Math.round(temps[0].temp)+'° → '+Math.round(temps.at(-1).temp)+'°':'Insufficient hourly data');
+card('Temperature trend',change===null?'—':(change>0?'+':'')+Math.round(change)+'°F',change!==null?Math.round(rows[0].temp)+'° → '+Math.round(rows.at(-1).temp)+'°':'Insufficient hourly data');
 for(const x of rows){const row=document.createElement('div'),time=document.createElement('span'),chance=document.createElement('strong'),amount=document.createElement('span'),temp=document.createElement('span');row.className='su42-hour';time.textContent=hourLabel(x.time);chance.textContent=valid(x.chance)?Math.round(x.chance)+'%':'—';amount.textContent=valid(x.amount)?x.amount.toFixed(2)+' in':'—';temp.textContent=valid(x.temp)?Math.round(x.temp)+'°F':'—';row.append(time,chance,amount,temp);hours.append(row)}
 });
 })();
