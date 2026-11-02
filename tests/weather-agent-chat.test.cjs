@@ -7,6 +7,7 @@ function ask(q){input.value=q;form.listeners.submit({preventDefault(){}});return
 function weather(now){const times=[],p=[],a=[],temp=[],wind=[],code=[];for(let i=0;i<72;i++){const d=new Date('2026-11-02T00:00:00Z');d.setUTCHours(i);times.push(d.toISOString().slice(0,16));p.push(i===19?85:10);a.push(i===19?.3:0);temp.push(55+i/10);wind.push(8);code.push(0)}return {current:{time:now},hourly:{time:times,precipitation_probability:p,precipitation:a,temperature_2m:temp,wind_speed_10m:wind,weather_code:code}}}
 events['stormwatch:updated']({detail:{weather:weather('2026-11-02T12:00')}});
 assert.match(ask('Will it rain this afternoon?'),/No strong precipitation/);
+assert.match(ask('Tell me a joke'),/I can help with rain/);
 assert.match(ask('What about tonight?'),/7 PM/);
 assert.match(ask('How much rain tomorrow?'),/0.00 inches/);
 assert.match(ask('What about tonight?'),/0.30 inches/);
