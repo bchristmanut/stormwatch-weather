@@ -3,10 +3,10 @@
 const panel=document.getElementById('alertPanel');if(!panel)return;
 const section=document.createElement('div');section.className='sw-severe';
 const head=document.createElement('div');head.className='sw-severe-head';
-const title=document.createElement('strong');title.textContent='⚠ Severe Weather Center';
+const title=document.createElement('strong');title.textContent='Official NWS alerts';
 const refresh=document.createElement('button');refresh.type='button';refresh.textContent='↻ Check alerts';head.append(title,refresh);
 const status=document.createElement('p');status.className='sw-severe-status';status.setAttribute('role','status');
-const list=document.createElement('div');section.append(head,status,list);panel.insertBefore(section,document.getElementById('alerts'));
+const list=document.createElement('div');list.className='sw-severe-list';section.append(head,status,list);panel.insertBefore(section,document.getElementById('alerts'));const legacy=document.getElementById('alerts');if(legacy)legacy.hidden=true;
 let current=null,controller=null,lastCheck=0;
 function us(lat,lon){return lat>=24&&lat<=50&&lon>=-125&&lon<=-66||lat>=51&&lat<=72&&lon>=-170&&lon<=-129||lat>=18&&lat<=23&&lon>=-161&&lon<=-154}
 function date(v){if(!v)return 'Not specified';const d=new Date(v);return Number.isNaN(d.getTime())?'Not specified':d.toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}
