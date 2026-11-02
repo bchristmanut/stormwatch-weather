@@ -9,6 +9,7 @@ const screens=[
  {id:'details',title:'Weather details',sub:'More measurements, daylight and nearby observation stations.',panels:['detailsPanel','sunPanel','stationPanel']}
 ];
 const pages=new Map();
+const sw58Rain=document.createElement('section');sw58Rain.className='sw58-rain';sw58Rain.setAttribute('aria-label','Upcoming precipitation forecast');const sw58RainTitle=document.createElement('strong');sw58RainTitle.textContent='Rain outlook';const sw58RainText=document.createElement('p');sw58RainText.textContent='Waiting for hourly forecast…';sw58Rain.append(sw58RainTitle,sw58RainText);
 const sw51Grid=document.createElement('section');sw51Grid.className='sw51-bento';
 const sw51Values={};
 const sw54Icons={sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>',wind:'<path d="M12 2l6 18-6-4-6 4z"/>',drop:'<path d="M12 2C9 7 5 11 5 15a7 7 0 0 0 14 0c0-4-4-8-7-13z"/>',sunrise:'<path d="M2 18h20M12 3v10m-4-4 4 4 4-4M4 15h2m12 0h2"/>'};for(const key of ['UV Index','Wind','Humidity','Sunrise']){const tile=document.createElement('article');tile.className='sw51-tile';const label=document.createElement('span');label.textContent=key;const value=document.createElement('strong');value.textContent='—';const glyph=document.createElement('span');glyph.className='sw52-icon';glyph.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+sw54Icons[{'UV Index':'sun','Wind':'wind','Humidity':'drop','Sunrise':'sunrise'}[key]]+'</svg>';glyph.setAttribute('aria-hidden','true');tile.append(label,glyph,value);sw51Grid.append(tile);sw51Values[key]=value}
@@ -20,7 +21,7 @@ for(const item of screens){
  const sub=document.createElement('p');sub.textContent=item.sub;
  head.append(label,title,sub);page.append(head);
  for(const id of item.panels){const el=document.getElementById(id);if(el)page.append(el)}
- if(item.id==='home'){const stats=document.getElementById('conditionsSummary');if(stats)stats.after(sw51Grid);else page.append(sw51Grid)}
+ if(item.id==='home'){const hero=document.getElementById('forecastSection');if(hero)hero.after(sw58Rain);const stats=document.getElementById('conditionsSummary');if(stats)stats.after(sw51Grid);else page.append(sw51Grid)}
  pages.set(item.id,page);main.insertBefore(page,main.querySelector('footer'));
 }
 const tabs=[...document.querySelectorAll('.app-tabs button[data-screen]')];
