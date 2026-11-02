@@ -9,6 +9,7 @@ const screens=[
  {id:'details',title:'Weather details',sub:'More measurements, daylight and nearby observation stations.',panels:['detailsPanel','sunPanel','stationPanel']}
 ];
 const pages=new Map();
+const sw51Ready=true;
 for(const item of screens){
  const page=document.createElement('section');page.className='sw-page';page.id='sw-page-'+item.id;page.dataset.page=item.id;page.setAttribute('aria-label',item.title);
  const head=document.createElement('div');head.className='sw-page-heading';
