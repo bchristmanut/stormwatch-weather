@@ -406,3 +406,17 @@ body.sw-scene-still .sky-scene *,body.sw-scene-still .sky-scene *::before,body.s
 .wt-zoom{display:flex;gap:8px;margin:10px 0 4px}.wt-zoom button{flex:1}.wt-zoom button[aria-pressed=true]{background:#b5e8ff;color:#092a4b;font-weight:750}
 .wt-axis{gap:8px}.wt-axis span{font-size:10px;min-width:0}.wt-axis span:nth-child(2){text-align:center}.wt-axis span:last-child{text-align:right}
 @media(max-width:390px){.wt-panel{padding:12px}.wt-chart{height:245px;min-height:245px}.wt-top{flex-wrap:wrap}.wt-time{text-align:left;flex:1 1 100%}.wt-details{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Safari compatibility: fixed tabs, safe-area, map reflow and touch targets */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior-y:auto}
+body{min-width:0;-webkit-tap-highlight-color:transparent}
+main{width:100%;min-width:0;padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+.app-tabs{padding-bottom:env(safe-area-inset-bottom,0px);transform:translateZ(0);-webkit-transform:translateZ(0);z-index:1000}
+.app-tabs button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;min-height:48px}
+#radarMap{min-height:300px;touch-action:pan-x pan-y}
+.rp-fullscreen #radarMap{min-height:45vh}
+.rp-modal{overflow:hidden}
+.rp-timeline{width:100%;min-height:44px;accent-color:#8edcff}
+.wt-chart{-webkit-touch-callout:none}
+@supports(height:100dvh){.rp-fullscreen{max-height:100dvh}}
+@media(max-width:390px){main{padding-left:12px;padding-right:12px}.app-tabs button{font-size:11px}}
