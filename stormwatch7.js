@@ -12,10 +12,11 @@ function show(screen){
  document.body.dataset.screen=screen;
  for(const tab of tabs){if(tab.dataset.screen===screen)tab.setAttribute('aria-current','page');else tab.removeAttribute('aria-current')}
  try{sessionStorage.setItem('stormwatch-screen',screen)}catch{}
- window.scrollTo({top:0,behavior:'instant'});
- if(screen==='radar'&&typeof sw3Map!=='undefined'&&sw3Map){requestAnimationFrame(()=>setTimeout(()=>sw3Map.invalidateSize({pan:false}),180))}
+ try{window.scrollTo(0,0)}catch{}
+ if(screen==='radar'&&typeof sw3Map!=='undefined'&&sw3Map){requestAnimationFrame(()=>setTimeout(()=>sw3Map.invalidateSize({pan:false}),220))}else if(typeof sw3Pause==='function')sw3Pause();
 }
 for(const tab of tabs)tab.addEventListener('click',()=>show(tab.dataset.screen));
 for(const link of document.querySelectorAll('.quick-nav a'))link.addEventListener('click',event=>{const target=link.getAttribute('href');const id=target?.slice(1);const screen=map[id];if(screen){event.preventDefault();show(screen)}});
-const hash=location.hash.slice(1);show(map[hash]||'home');
+const hash=location.hash.slice(1);let savedScreen='home';try{savedScreen=sessionStorage.getItem('stormwatch-screen')||'home'}catch{}show(map[hash]||savedScreen);
+window.addEventListener('pageshow',()=>{if(document.body.dataset.screen==='radar'&&typeof sw3Map!=='undefined'&&sw3Map)setTimeout(()=>sw3Map.invalidateSize({pan:false}),250)});
 })();
