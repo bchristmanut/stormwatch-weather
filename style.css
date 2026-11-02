@@ -247,3 +247,35 @@ body[data-screen=home] .brand small{letter-spacing:1px}
 #rainPanel .rain-visual{display:none!important}
 body[data-screen=home] #rainPanel .rain-intelligence{margin-top:8px}
 @media(max-width:370px){.ri-metrics strong{font-size:13px}.ri-times{font-size:8px}}
+
+/* Radar Pro — Leaflet's own positioning must win over legacy pane rules */
+#radarMap{position:relative!important;overflow:hidden!important;contain:layout paint;isolation:isolate;max-width:100%;border-radius:20px;touch-action:pan-x pan-y}
+#radarMap .leaflet-pane{position:absolute!important;left:0!important;top:0!important;right:auto!important;bottom:auto!important;inset:auto!important}
+#radarMap .leaflet-map-pane{position:absolute!important;left:0!important;top:0!important;right:auto!important;bottom:auto!important;inset:auto!important}
+#radarMap .leaflet-tile-pane,#radarMap .leaflet-overlay-pane,#radarMap .leaflet-shadow-pane,#radarMap .leaflet-marker-pane,#radarMap .leaflet-tooltip-pane,#radarMap .leaflet-popup-pane{position:absolute!important;left:0!important;top:0!important;right:auto!important;bottom:auto!important;inset:auto!important}
+#radarMap .leaflet-control-container{position:static!important;inset:auto!important;pointer-events:none}
+#radarMap .leaflet-control-container .leaflet-top,#radarMap .leaflet-control-container .leaflet-bottom{position:absolute!important;pointer-events:none}
+#radarMap .leaflet-control-container .leaflet-top{top:0!important;bottom:auto!important}
+#radarMap .leaflet-control-container .leaflet-bottom{bottom:0!important;top:auto!important}
+#radarMap .leaflet-control-container .leaflet-left{left:0!important;right:auto!important}
+#radarMap .leaflet-control-container .leaflet-right{right:0!important;left:auto!important}
+#radarMap .leaflet-control-container .leaflet-control{pointer-events:auto;position:relative!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important}
+#radarMap .leaflet-tile-container{position:absolute!important;left:0!important;top:0!important;right:auto!important;bottom:auto!important;inset:auto!important}
+#radarMap .leaflet-tile{position:absolute!important;max-width:none!important;max-height:none!important}
+#radarMap .leaflet-zoom-animated{transform-origin:0 0}
+.rp-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:12px 0}
+.rp-toolbar strong{font-size:12px;color:#c7eaff}
+.rp-toolbar button,.rp-toggle{font-size:12px;padding:9px 11px;background:#4d9cde30;border:1px solid #a4d9ff60;border-radius:11px;color:#e5f5ff}
+.rp-controls{padding:13px;border:1px solid #9ed6ff3b;border-radius:16px;background:#2d639d32;margin-top:10px}
+.rp-timeline{display:block;width:100%;accent-color:#80e5ff;min-height:34px;touch-action:pan-y}
+.rp-time-row{display:flex;justify-content:space-between;gap:10px;align-items:center;color:#cceaff;font-size:12px}
+.rp-time-row strong{font-size:14px}
+.rp-legend{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:12px 0 3px;font-size:10px;color:#c8ddf2}
+.rp-legend span{display:flex;align-items:center;gap:4px}
+.rp-legend i{display:block;width:13px;height:8px;border-radius:3px}
+.rp-legend .l1{background:#75c7ff}.rp-legend .l2{background:#42b9a3}.rp-legend .l3{background:#ffe15b}.rp-legend .l4{background:#f1814a}.rp-legend .l5{background:#bc65dc}
+.rp-warning{font-size:11px;color:#c5d8ec;line-height:1.5}
+#radarPanel.rp-fullscreen{position:fixed!important;z-index:1200;inset:0!important;overflow:auto!important;margin:0!important;padding:calc(env(safe-area-inset-top) + 12px) 12px calc(env(safe-area-inset-bottom) + 12px)!important;border-radius:0!important;background:#09172c!important;display:block!important}
+#radarPanel.rp-fullscreen #radarMap{height:calc(100dvh - 310px)!important;min-height:250px;max-height:none}
+body.rp-modal{overflow:hidden}
+@media(max-height:650px){#radarPanel.rp-fullscreen #radarMap{height:45dvh!important;min-height:200px}}
