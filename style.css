@@ -373,3 +373,24 @@ body.sw-loading #status{color:#bcecff}
 .wt-detail small{display:block;font-size:10px;color:#c9e1f1}.wt-detail strong{display:block;font-size:16px;margin-top:5px;overflow-wrap:anywhere}
 .wt-hint{font-size:11px;color:#c6deef;margin:10px 0 0}
 @media(max-width:360px){.wt-details{grid-template-columns:repeat(2,minmax(0,1fr))}.wt-panel{padding:12px}}
+
+/* Interactive StormWatch additions */
+.sw-extra{margin:12px 0;padding:15px;border-radius:18px;background:#143b64c7;border:1px solid #a8dfff55;color:#f0faff}
+.sw-extra h3{margin:0 0 8px;font-size:17px}.sw-extra p{font-size:12px;line-height:1.5;color:#d1e7f6}
+.sw-extra button,.sw-extra select{min-height:44px;border-radius:11px;padding:8px 12px;background:#a2dfff25;color:#fff;border:1px solid #a2dfff60}
+.sw-extra button[aria-pressed=true]{background:#b9eaff;color:#0a2d50}
+.sw-extra .sw-flex{display:flex;gap:8px;flex-wrap:wrap;margin:9px 0}
+.sw-extra .sw-readout{padding:11px;border-radius:12px;background:#a5ddff15;font-size:13px;line-height:1.6}
+.sw-extra label{display:flex;align-items:center;gap:8px;font-size:13px;margin:7px 0}
+.sw-extra input[type=range]{width:100%;min-height:36px;accent-color:#9fe4ff}
+.sw-extra input[type=checkbox]{width:20px;height:20px;accent-color:#8ddcff}
+.sw-extra .sw-muted{color:#c2d9ed;font-size:11px}
+.sw-extra .sw-dashboard-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #b7e5ff25}
+.sw-extra .sw-dashboard-row span{flex:1}
+.sw-extra .sw-dashboard-row button{min-width:42px}
+.sw-extra .sw-risk{padding:9px 0;border-bottom:1px solid #b7e5ff25}
+.sw-extra .sw-risk strong{display:block}
+.sw-extra .sw-risk small{display:block;color:#c4e1f2}
+.sw-inspect-marker{background:#0a3155;color:white;border:2px solid #b7efff;border-radius:50%;width:18px;height:18px;box-shadow:0 0 0 6px #80dcff33}
+
+body.sw-scene-still .sky-scene *,body.sw-scene-still .sky-scene *::before,body.sw-scene-still .sky-scene *::after{animation:none!important;transition:none!important}body.sw-scene-subtle .sky-scene *{animation-duration:30s!important}body.sw-scene-still .sky-rain{opacity:0!important}
