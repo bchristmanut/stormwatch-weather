@@ -336,3 +336,22 @@ body.sw-loading #status{color:#bcecff}
 .sw-toast[hidden]{display:none}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}body.sw-loading #refresh{animation:none}}
 @media(max-width:420px){.app-tabs button{padding-left:4px;padding-right:4px}.app-tabs .tab-icon{font-size:19px}}
+
+/* Severe Weather Center */
+.sw-severe{margin:12px 0;padding:14px;border:1px solid #b3dcff55;border-radius:17px;background:#0c2b4a9c;color:#eff7ff}
+.sw-severe-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sw-severe-head strong{font-size:15px}
+.sw-severe-head button{min-height:44px;padding:9px 13px;border-radius:12px;background:#9ddaff28;color:#f2fbff;border:1px solid #a5dfff55}
+.sw-severe-status{font-size:12px;color:#c7e3f5;line-height:1.5;margin:8px 0}
+.sw-severe-card{margin:10px 0;padding:12px;border-radius:14px;background:#ffffff0d;border:1px solid #b9e3ff44;border-left:5px solid #8ed6ff}
+.sw-severe-card[data-severity="Extreme"]{border-left-color:#ff4b75}
+.sw-severe-card[data-severity="Severe"]{border-left-color:#ff8d50}
+.sw-severe-card[data-severity="Moderate"]{border-left-color:#ffcd65}
+.sw-severe-card[data-severity="Minor"]{border-left-color:#8bd5ff}
+.sw-severe-card h3{font-size:15px;margin:5px 0}
+.sw-severe-meta{font-size:12px;color:#d5e8f8;line-height:1.55}
+.sw-severe-badge{display:inline-block;font-size:11px;font-weight:750;padding:5px 9px;border-radius:20px;background:#ffffff25}
+.sw-severe-card details{margin-top:10px}
+.sw-severe-card summary{font-size:13px;cursor:pointer;min-height:30px}
+.sw-severe-card p{font-size:12px;white-space:pre-line;line-height:1.55}
+.sw-severe-card a{color:#9fe4ff;font-size:12px}
