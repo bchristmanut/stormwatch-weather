@@ -8,7 +8,7 @@ const status=root.querySelector('.su32-status'),stats=root.querySelector('.su32-
 let location=null,checking=false;
 const num=x=>typeof x==='number'&&Number.isFinite(x)?x:null;
 function read(){try{const x=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(x)?x:[]}catch{return []}}
-function save(x){try{localStorage.setItem(key,JSON.stringify(x.slice(-90)))}catch{}}
+function save(x){try{localStorage.setItem(key,JSON.stringify(x.slice(-90)))}catch{}window.dispatchEvent(new CustomEvent('stormwatch:verificationchanged'))}
 function locationId(l){return Number(l.lat).toFixed(2)+','+Number(l.lon).toFixed(2)}
 function show(){const items=read().filter(x=>location&&x.loc===locationId(location));const verified=items.filter(x=>x.observed&&num(x.predictedHigh)!==null&&num(x.observed.high)!==null);
 const highErr=verified.length?verified.reduce((s,x)=>s+Math.abs(x.predictedHigh-x.observed.high),0)/verified.length:null;
