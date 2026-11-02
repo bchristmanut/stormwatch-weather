@@ -7,8 +7,8 @@ const status=section.querySelector('.su42-status'),cards=section.querySelector('
 const valid=x=>typeof x==='number'&&Number.isFinite(x);
 function card(label,value,detail){const box=document.createElement('div'),small=document.createElement('span'),strong=document.createElement('strong'),sub=document.createElement('small');small.textContent=label;strong.textContent=value;sub.textContent=detail;box.append(small,strong,sub);cards.append(box)}
 function hourLabel(s){const h=Number(s.slice(11,13));return(h%12||12)+(h<12?' AM':' PM')}
-window.addEventListener('stormwatch:updated',e=>{const d=e.detail?.weather,h=d?.hourly,c=d?.current;if(!Array.isArray(h?.time)||!h.time.length)return;
-const now=c?.time||h.time[0],found=h.time.findIndex(t=>t.slice(0,13)>=now.slice(0,13)),start=found<0?Math.max(0,h.time.length-12):found,end=Math.min(h.time.length,start+12);
+window.addEventListener('stormwatch:updated',e=>{const d=e.detail?.weather,h=d?.hourly,c=d?.current;if(!Array.isArray(h?.time)||!h.time.length){cards.replaceChildren();hours.replaceChildren();status.textContent='Hourly forecast unavailable for this location.';return}
+const now=c?.time||h.time[0],found=h.time.findIndex(t=>t.slice(0,13)>=now.slice(0,13)),start=found<0?0:found,end=Math.min(h.time.length,start+12);
 const rows=[];for(let i=start;i<end;i++)rows.push({time:h.time[i],chance:h.precipitation_probability?.[i],amount:h.precipitation?.[i],temp:h.temperature_2m?.[i],code:h.weather_code?.[i]});
 cards.replaceChildren();hours.replaceChildren();if(!rows.length){status.textContent='Hourly forecast is temporarily unavailable.';return}
 const wet=rows.filter(x=>(valid(x.chance)&&x.chance>=40)||(valid(x.amount)&&x.amount>=0.01)),first=wet[0],amountRows=rows.filter(x=>valid(x.amount)),total=amountRows.reduce((s,x)=>s+Math.max(0,x.amount),0),peak=rows.reduce((a,x)=>valid(x.chance)&&(!a||x.chance>a.chance)?x:a,null);
