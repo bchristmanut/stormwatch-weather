@@ -284,3 +284,5 @@ body.rp-modal{overflow:hidden}
 #status{border-radius:12px;transition:background .2s,color .2s}
 #status.storm-stale{padding:10px 12px;background:#e6a04428;border:1px solid #ffcb7b88;color:#ffe3a6;font-weight:650}
 #refresh:disabled{opacity:.45;cursor:wait}
+
+.rp-speed{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:#d8ecff;margin:9px 0 13px}.rp-speed select{background:#153f73;color:#fff;border:1px solid #91cfff88;border-radius:9px;padding:8px 10px;font-size:13px}
