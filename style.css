@@ -617,3 +617,34 @@ body[data-screen=home] .sw-page-heading{margin-bottom:8px}body[data-screen=home]
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 80% 5%,var(--sw-glass-glow),transparent 58%)}
 @media(prefers-reduced-transparency:reduce){.hero{background:#142e4b!important}.hero,.panel,.stats>div,.weather-tile,.hour,.sw68-model,.sw69-chart-wrap{border-color:#41617e!important}}
 @media(prefers-reduced-motion:reduce){.hero,.panel,.stats>div,.weather-tile,.hour,.sw68-model,.sw69-chart-wrap{transition:none!important}}
+
+/* v72 — Aurora: a new editorial, midnight-sky visual identity */
+:root{--sw-aurora-mint:#a7f4df;--sw-aurora-ice:#d7edff;--sw-aurora-muted:#a6bed0}
+body{background:radial-gradient(ellipse 100% 45% at 4% -10%,rgba(47,151,162,.29),transparent 68%),radial-gradient(ellipse 80% 50% at 100% 15%,rgba(83,76,165,.24),transparent 68%),linear-gradient(165deg,#061a29 0%,#071222 55%,#0c1027 100%);color:#f3f8ff}
+main{max-width:720px;padding-left:clamp(16px,4vw,28px);padding-right:clamp(16px,4vw,28px)}
+.top-eyebrow{letter-spacing:.24em!important;color:var(--sw-aurora-mint)!important;font-size:10px!important}
+.brand b{font-size:17px;letter-spacing:.16em}.brand small{color:#b5d4d8;letter-spacing:.13em}.bolt{background:linear-gradient(145deg,#a7f4df,#68bdd4);color:#082536;border:1px solid #e6fffa80;box-shadow:0 5px 20px #6ae7cb33;border-radius:15px}
+header{padding:8px 0 10px}.intro-copy{font-size:clamp(20px,4.8vw,29px)!important;line-height:1.18!important;font-weight:650!important;letter-spacing:-.045em!important;color:#edf9ff!important;max-width:390px}
+.search{gap:9px}.search input{border-radius:16px!important;min-height:49px}.search button,#refresh{border-radius:15px;background:linear-gradient(145deg,#206777,#1d4565);border:1px solid #9ce9e650;box-shadow:inset 0 1px 0 #ffffff22}
+.hero{border-radius:32px!important;padding:clamp(23px,5vw,34px)!important;min-height:265px;overflow:hidden;isolation:isolate;position:relative}
+.hero::before{content:'';position:absolute;width:220px;height:220px;right:-65px;top:-90px;border-radius:50%;background:radial-gradient(circle,#b0fff452 0%,#87d9e323 35%,transparent 73%);pointer-events:none;z-index:-1}
+.hero::after{content:'';position:absolute;inset:1px;border-radius:inherit;pointer-events:none;background:linear-gradient(110deg,rgba(255,255,255,.13),transparent 32%);z-index:-1}
+.hero-kicker{letter-spacing:.23em!important;font-size:10px!important;color:#bff9ed!important;font-weight:750!important}
+.location #place{font-size:clamp(17px,4vw,22px);letter-spacing:-.025em}.location #updated{font-size:10px;max-width:110px}
+.temp{font-size:clamp(86px,20vw,122px)!important;line-height:.98!important;font-weight:180!important;letter-spacing:-.085em!important;font-variant-numeric:tabular-nums}
+.degree{font-size:.5em!important;letter-spacing:-.05em!important}
+#condition{font-size:19px;letter-spacing:-.02em}#range{color:#c5e3e9}
+.weatherIcon{font-size:clamp(60px,15vw,90px);filter:drop-shadow(0 8px 24px #a7f4df30)}
+.panel{border-radius:24px!important;padding:clamp(16px,3vw,22px)!important}.panel h2{font-size:17px!important;letter-spacing:-.025em!important}
+.stats{gap:12px}.stats>div{border-radius:22px!important;padding:18px!important;min-height:94px}.stats span{color:#b7d4dc!important;font-size:10px!important;letter-spacing:.16em}.stats b{font-size:24px;letter-spacing:-.04em}
+.weather-tile,.hour,.sw51-tile,.sw59-card,.sw68-model{border-radius:18px!important}
+.hour{min-width:70px}.hour b{font-size:21px}
+.sw-page-heading h1,.sw-page-heading h2{letter-spacing:-.045em!important}
+.sw-page-heading p{color:#aac4d4!important}
+.app-tabs{border-radius:24px 24px 0 0!important;padding-top:8px!important;background:rgba(7,26,42,.91)!important}
+.app-tabs button[data-active="true"],.app-tabs button[aria-current="page"]{color:#b9fff0!important}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #a7f4df!important;outline-offset:3px}
+.sw-severe-card,.alert{border-radius:18px!important}
+@media(max-width:390px){.hero{min-height:245px}.location{gap:7px}.temp{font-size:83px!important}.stats>div{padding:14px!important}}
+@media(prefers-reduced-transparency:reduce){.hero,.panel,.stats>div{background:#142e4b!important}}
+@media(prefers-reduced-motion:reduce){.hero::before{animation:none!important}}
