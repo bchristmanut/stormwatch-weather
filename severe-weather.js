@@ -16,7 +16,7 @@ function render(features){list.replaceChildren();const priority={Extreme:0,Sever
  if(!active.length){const p=document.createElement('p');p.className='sw-severe-status';p.textContent='No active NWS alerts were returned for this location at the time checked.';list.append(p);return}
  for(const feature of active.slice(0,20)){const p=feature.properties||{},card=document.createElement('article');card.className='sw-severe-card';card.dataset.severity=p.severity||'Unknown';
  const badge=document.createElement('span');badge.className='sw-severe-badge';badge.textContent=(p.severity||'Unknown')+' severity';
- const h=document.createElement('h3');h.textContent=p.event||'Weather alert';card.append(badge,h);
+ const h=document.createElement('h3');h.textContent=p.event||'Weather alert';card.append(badge,h);const urgency=document.createElement('p');urgency.className='sw-severe-urgency';urgency.textContent=[p.urgency,p.certainty].filter(Boolean).join(' · ');if(urgency.textContent)card.append(urgency);
  line(card,'Area',p.areaDesc);line(card,'Effective',date(p.effective||p.onset));line(card,'Expires',date(p.expires||p.ends));
  const details=document.createElement('details'),summary=document.createElement('summary');summary.textContent='Read alert and safety instructions';details.append(summary);
  for(const [label,value] of [['Headline',p.headline],['Description',p.description],['Safety instructions',p.instruction]])if(value){const sub=document.createElement('p');const strong=document.createElement('strong');strong.textContent=label+': ';sub.append(strong,document.createTextNode(String(value)));details.append(sub)}
