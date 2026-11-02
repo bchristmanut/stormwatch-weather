@@ -7,6 +7,7 @@ const status=section.querySelector('.su42-status'),cards=section.querySelector('
 const valid=x=>typeof x==='number'&&Number.isFinite(x);
 function card(label,value,detail){const box=document.createElement('div'),small=document.createElement('span'),strong=document.createElement('strong'),sub=document.createElement('small');small.textContent=label;strong.textContent=value;sub.textContent=detail;box.append(small,strong,sub);cards.append(box)}
 function hourLabel(s){const h=Number(s.slice(11,13));return(h%12||12)+(h<12?' AM':' PM')}
+const dayDetails=document.createElement('section');dayDetails.className='sw57-day-details';dayDetails.setAttribute('aria-live','polite');const daily=document.getElementById('daily');if(daily)daily.after(dayDetails);
 window.addEventListener('stormwatch:updated',e=>{const d=e.detail?.weather,h=d?.hourly,c=d?.current;if(!Array.isArray(h?.time)||!h.time.length){cards.replaceChildren();hours.replaceChildren();status.textContent='Hourly forecast unavailable for this location.';return}
 const now=c?.time||h.time[0],found=h.time.findIndex(t=>t.slice(0,13)>=now.slice(0,13)),start=found<0?0:found,end=Math.min(h.time.length,start+12);
 const rows=[];for(let i=start;i<end;i++)rows.push({time:h.time[i],chance:h.precipitation_probability?.[i],amount:h.precipitation?.[i],temp:h.temperature_2m?.[i],code:h.weather_code?.[i]});
