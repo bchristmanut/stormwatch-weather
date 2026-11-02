@@ -21,3 +21,6 @@ window.addEventListener('online',()=>{const s=document.getElementById('status');
 window.addEventListener('offline',()=>{const s=document.getElementById('status');if(s){s.textContent='⚠ Offline · Previously loaded information may be outdated';s.classList.add('storm-stale')}});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-stormLastSuccess>15*60000)load()});
 setInterval(()=>{if(!document.hidden&&navigator.onLine!==false&&Date.now()-stormLastSuccess>20*60000)load()},5*60000);
+
+/* Public location switching API used by Saved Cities. */
+window.stormwatchLocation={get:()=>({...selected}),switchTo:location=>{if(!location||!Number.isFinite(Number(location.lat))||!Number.isFinite(Number(location.lon))||!location.name)return false;selected={lat:Number(location.lat),lon:Number(location.lon),name:String(location.name)};localStorage.setItem('stormwatch-location',JSON.stringify(selected));if(busy){const wait=()=>{if(!busy)load();else setTimeout(wait,200)};wait()}else load();return true}};
