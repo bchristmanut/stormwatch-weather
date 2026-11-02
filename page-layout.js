@@ -10,6 +10,7 @@ const screens=[
 ];
 const pages=new Map();
 const sw51Ready=true;
+const sw51Grid=document.createElement('section');sw51Grid.className='sw51-bento';
 for(const item of screens){
  const page=document.createElement('section');page.className='sw-page';page.id='sw-page-'+item.id;page.dataset.page=item.id;page.setAttribute('aria-label',item.title);
  const head=document.createElement('div');head.className='sw-page-heading';
