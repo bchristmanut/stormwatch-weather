@@ -13,8 +13,8 @@ function date(v){if(!v)return 'Not specified';const d=new Date(v);return Number.
 function line(el,label,value){const p=document.createElement('div');p.className='sw-severe-meta';p.textContent=label+': '+(value||'Not specified');el.append(p)}
 function render(features){list.replaceChildren();const priority={Extreme:0,Severe:1,Moderate:2,Minor:3,Unknown:4};
  const active=features.filter(f=>{const p=f.properties||{};return !p.expires||new Date(p.expires).getTime()>Date.now()}).sort((a,b)=>(priority[a.properties?.severity]??4)-(priority[b.properties?.severity]??4));
- if(!active.length){const p=document.createElement('p');p.className='sw-severe-status';p.textContent='No active NWS alerts were returned for this location at the time checked.';list.append(p);return}
- for(const feature of active.slice(0,20)){const p=feature.properties||{},card=document.createElement('article');card.className='sw-severe-card';card.dataset.severity=p.severity||'Unknown';
+ if(!active.length){section.dataset.state='clear';const p=document.createElement('p');p.className='sw-severe-status';p.textContent='No active NWS alerts were returned for this location at the time checked.';list.append(p);return}
+ section.dataset.state='active';for(const feature of active.slice(0,20)){const p=feature.properties||{},card=document.createElement('article');card.className='sw-severe-card';card.dataset.severity=p.severity||'Unknown';
  const badge=document.createElement('span');badge.className='sw-severe-badge';badge.textContent=(p.severity||'Unknown')+' severity';
  const h=document.createElement('h3');h.textContent=p.event||'Weather alert';card.append(badge,h);const urgency=document.createElement('p');urgency.className='sw-severe-urgency';urgency.textContent=[p.urgency,p.certainty].filter(Boolean).join(' · ');if(urgency.textContent)card.append(urgency);
  line(card,'Area',p.areaDesc);line(card,'Effective',date(p.effective||p.onset));line(card,'Expires',date(p.expires||p.ends));const end=p.expires||p.ends;if(end){const remaining=Math.round((new Date(end).getTime()-Date.now())/60000);if(Number.isFinite(remaining)&&remaining>=0){const countdown=document.createElement('div');countdown.className='sw-severe-countdown';countdown.textContent=remaining<60?'Expires in '+remaining+' min':'Expires in '+Math.floor(remaining/60)+' hr '+remaining%60+' min';card.append(countdown)}}
@@ -25,13 +25,13 @@ function render(features){list.replaceChildren();const priority={Extreme:0,Sever
 }
 async function check(force=false){if(!current)return;if(!us(current.lat,current.lon)){status.textContent='Official NWS alerts are available for U.S. locations only.';list.replaceChildren();return}
  if(!force&&Date.now()-lastCheck<2*60000)return;
- if(controller)controller.abort();controller=new AbortController();const loc={...current};status.textContent='Checking official NWS alerts…';
+ if(controller)controller.abort();controller=new AbortController();const loc={...current};section.dataset.state='checking';status.textContent='Checking official NWS alerts…';
  const timer=setTimeout(()=>controller.abort(),12000);
  try{const url='https://api.weather.gov/alerts/active?point='+encodeURIComponent(loc.lat.toFixed(4)+','+loc.lon.toFixed(4));
  const response=await fetch(url,{headers:{Accept:'application/geo+json'},signal:controller.signal,cache:'no-store'});if(!response.ok)throw Error('NWS service returned '+response.status);
  const data=await response.json();if(current.lat!==loc.lat||current.lon!==loc.lon)return;
  lastCheck=Date.now();render(data.features||[]);status.textContent='Official NWS alerts checked '+new Date(lastCheck).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+' · Checked only while StormWatch is open. Not an emergency notification service.';
- }catch(err){if(err.name!=='AbortError'){status.textContent='Could not check alerts. Existing alert information may be outdated. For urgent warnings, visit weather.gov.'}}
+ }catch(err){if(err.name!=='AbortError'){section.dataset.state='error';status.textContent='Could not check alerts. Existing alert information may be outdated. For urgent warnings, visit weather.gov.'}}
  finally{clearTimeout(timer)}}
 refresh.addEventListener('click',()=>check(true));
 window.addEventListener('stormwatch:updated',e=>{const loc=e.detail.location;if(!current||current.lat!==loc.lat||current.lon!==loc.lon)lastCheck=0;current=loc;check()});
