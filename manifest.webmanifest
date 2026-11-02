@@ -1,0 +1,1 @@
+{"name":"StormWatch Weather","short_name":"StormWatch","description":"Personal weather dashboard with live forecasts and NWS alerts","start_url":"./","scope":"./","display":"standalone","background_color":"#061120","theme_color":"#081629","icons":[{"src":"icon.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}
