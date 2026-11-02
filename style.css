@@ -524,3 +524,5 @@ main{padding-bottom:calc(115px + env(safe-area-inset-bottom))}
 
 /* v51 glass */
 body .sw-page>.panel{background:rgba(255,255,255,.1)!important;backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.2)!important}
+
+body[data-sky=clear]{background:linear-gradient(#247bb9,#07182c) fixed}body[data-sky=rain]{background:linear-gradient(#344d68,#091b30) fixed}body[data-sky=storm]{background:linear-gradient(#373c65,#0b1329) fixed}body[data-sky=night]{background:linear-gradient(#17264e,#070f25) fixed}
