@@ -648,3 +648,44 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 @media(max-width:390px){.hero{min-height:245px}.location{gap:7px}.temp{font-size:83px!important}.stats>div{padding:14px!important}}
 @media(prefers-reduced-transparency:reduce){.hero,.panel,.stats>div{background:#142e4b!important}}
 @media(prefers-reduced-motion:reduce){.hero::before{animation:none!important}}
+
+/* v73 — Apple-inspired sky redesign, based on approved visual reference */
+:root{--sky-top:#0759b2;--sky-mid:#267fcb;--sky-bottom:#74b5e6;--sky-glass:rgba(126,190,235,.20);--sky-stroke:rgba(255,255,255,.33)}
+html{background:#145fa9}body{background:linear-gradient(175deg,var(--sky-top) 0%,var(--sky-mid) 48%,var(--sky-bottom) 100%) fixed!important;color:#fff;min-height:100dvh}
+body::before{z-index:0!important;background:radial-gradient(circle at 8% 12%,rgba(255,250,210,.60),transparent 19%),radial-gradient(ellipse at 90% 8%,rgba(255,255,255,.18),transparent 37%),radial-gradient(ellipse at 14% 78%,rgba(255,255,255,.14),transparent 42%)!important}
+main{position:relative;z-index:1;max-width:660px}
+.sky-scene{opacity:.34;pointer-events:none}
+.top-eyebrow,.brand small,.hero-kicker{color:rgba(255,255,255,.78)!important}
+.brand .bolt{background:rgba(255,255,255,.19)!important;color:white!important;border:1px solid rgba(255,255,255,.35)}
+.intro-copy{color:#fff!important}
+.hero{background:transparent!important;border:0!important;box-shadow:none!important;text-align:center;padding:32px 12px 24px!important;min-height:260px}
+.hero::before,.hero::after{display:none!important}
+.hero .location{flex-direction:column;align-items:center;gap:4px}
+.hero #place{font-size:clamp(30px,8vw,43px)!important;font-weight:450;letter-spacing:-.045em}
+.hero #updated{font-size:11px;max-width:none;color:#dceeff}
+.hero .mainweather{justify-content:center;position:relative;margin-top:6px}
+.hero .temp{font-size:clamp(100px,25vw,152px)!important;letter-spacing:-.095em!important;font-weight:150!important;line-height:1.04!important}
+.hero #condition{font-size:clamp(21px,5vw,28px);font-weight:500}
+.hero #range{font-size:17px;color:#fff;margin-top:6px}
+.hero .weatherIcon{position:absolute;right:0;top:10px;font-size:46px;opacity:.86}
+.panel,.stats>div,.sw51-tile,.sw59-card,.weather-tile,.hour,.sw68-model,.sw69-chart-wrap,.sw58-rain,.sw51-bento>*,.sw58-agent-wrap{background:var(--sky-glass)!important;border:1px solid var(--sky-stroke)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 8px 24px rgba(4,47,99,.12)!important}
+.panel{border-radius:27px!important}
+.panel h2{font-size:15px!important;letter-spacing:.04em!important;text-transform:uppercase;font-weight:600}
+.stats>div{border-radius:22px!important}
+.search input{background:rgba(255,255,255,.18)!important;border:1px solid rgba(255,255,255,.32)!important;color:white!important}
+.search input::placeholder{color:#e4f3ff}
+.search button,#refresh{background:rgba(255,255,255,.19)!important;border:1px solid rgba(255,255,255,.3)!important;color:white!important}
+.app-tabs{background:rgba(46,109,173,.36)!important;border:1px solid rgba(255,255,255,.25)!important;border-bottom:0!important;box-shadow:0 -5px 28px rgba(0,47,104,.12),inset 0 1px 0 rgba(255,255,255,.24)!important;border-radius:24px 24px 0 0!important}
+.app-tabs button{color:#e4f4ff!important}
+.app-tabs button[aria-current=page]{background:rgba(255,255,255,.22)!important;color:#fff!important;border-radius:15px}
+.sw-page-heading h1,.sw-page-heading h2{color:#fff!important}
+.sw-page-heading p,.muted,.panel h2 small{color:#e0f1ff!important}
+.hourly{scroll-snap-type:x mandatory}.hour{scroll-snap-align:start;min-width:72px}
+.day{border-color:rgba(255,255,255,.23)!important}
+.sw-severe-card,.alert{background:rgba(88,54,37,.94)!important;border-color:#ffce8d!important}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.panel,.stats>div,.sw51-tile,.sw59-card,.weather-tile,.hour,.sw68-model,.sw69-chart-wrap,.app-tabs{-webkit-backdrop-filter:blur(24px) saturate(155%);backdrop-filter:blur(24px) saturate(155%)}}
+html[data-glass-weather=night],html[data-glass-weather=storm]{--sky-top:#131c4e;--sky-mid:#353b79;--sky-bottom:#5c6197;--sky-glass:rgba(55,61,119,.30)}
+html[data-glass-weather=rain],html[data-glass-weather=cloudy]{--sky-top:#264a75;--sky-mid:#487ca4;--sky-bottom:#729dbb;--sky-glass:rgba(72,112,154,.25)}
+html[data-glass-weather=snow]{--sky-top:#3975a9;--sky-mid:#76a6c9;--sky-bottom:#a6c8dc;--sky-glass:rgba(120,163,194,.22)}
+@media(prefers-reduced-transparency:reduce){.panel,.stats>div,.sw51-tile,.sw59-card,.weather-tile,.hour,.app-tabs{background:#245d99!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}
+@media(max-width:380px){.hero .temp{font-size:98px!important}.hero .weatherIcon{font-size:34px}}
