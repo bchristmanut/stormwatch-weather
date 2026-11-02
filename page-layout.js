@@ -20,7 +20,7 @@ for(const item of screens){
  const sub=document.createElement('p');sub.textContent=item.sub;
  head.append(label,title,sub);page.append(head);
  for(const id of item.panels){const el=document.getElementById(id);if(el)page.append(el)}
- if(item.id==='home')page.append(sw51Grid);
+ if(item.id==='home'){const stats=document.getElementById('conditionsSummary');if(stats)stats.after(sw51Grid);else page.append(sw51Grid)}
  pages.set(item.id,page);main.insertBefore(page,main.querySelector('footer'));
 }
 const tabs=[...document.querySelectorAll('.app-tabs button[data-screen]')];
