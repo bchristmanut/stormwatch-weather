@@ -2,7 +2,7 @@
 (()=>{'use strict';
 const journal=document.querySelector('.su32');if(!journal)return;
 const section=document.createElement('section');section.className='su37';
-section.innerHTML='<h3>Station history cross-check</h3><p class="su37-status" role="status">Load a US location to check station history.</p><button type="button" class="su37-button">Compare recent completed days</button><div class="su37-results"></div><p class="su37-note">Experimental: compares saved next-day forecast highs with available NWS station readings. A station daily maximum derived from periodic reports can miss the actual peak. Only dates with broad observation coverage are shown. This does not replace the historical gridded verification journal.</p>';
+section.innerHTML='<h3>Station history cross-check</h3><p class="su37-status" role="status">Load a US location to check station history.</p><button type="button" class="su37-button">Compare recent completed days</button><div class="su37-results"></div><details class="su37-note"><summary>How station comparisons work</summary><p>Experimental: compares saved next-day forecast highs with available NWS station readings. A station daily maximum derived from periodic reports can miss the actual peak. Only dates with broad observation coverage are shown. This does not replace the historical gridded verification journal.</p></details>';
 journal.after(section);
 const status=section.querySelector('.su37-status'),results=section.querySelector('.su37-results'),button=section.querySelector('button'),key='stormwatch-verification-v32';
 let loc=null,tz='America/Chicago',busy=false,seq=0;
@@ -16,7 +16,7 @@ function localDay(time){const parts=new Intl.DateTimeFormat('en-US',{timeZone:tz
 window.addEventListener('stormwatch:updated',e=>{const l=e.detail?.location,w=e.detail?.weather;if(!Number.isFinite(l?.lat)||!Number.isFinite(l?.lon))return;loc={lat:l.lat,lon:l.lon};tz=w?.timezone||'America/Chicago';seq++;results.replaceChildren();status.textContent=us(l.lat,l.lon)?'Ready to check recent station observations.':'Station history is available only for supported US locations.'});
 button.addEventListener('click',async()=>{if(busy||!loc)return;if(!us(loc.lat,loc.lon)){status.textContent='Unsupported location for NWS station history.';return}
 const token=seq;busy=true;button.disabled=true;results.replaceChildren();status.textContent='Looking for recent completed forecasts and nearby station reports…';
-try{const now=Date.now(),cutoff=localDay(now),minDay=localDay(now-7*86400000),records=read().filter(x=>x.loc===id(loc)&&x.date>=minDay&&x.date<cutoff&&num(x.predictedHigh)!==null).sort((a,b)=>a.date.localeCompare(b.date));if(!records.length){status.textContent='No eligible saved forecasts from recent completed days yet. Keep using StormWatch.';return}
+try{const now=Date.now(),cutoff=localDay(now),minDay=localDay(now-7*86400000),records=read().filter(x=>x.loc===id(loc)&&x.date>=minDay&&x.date<cutoff&&num(x.predictedHigh)!==null).sort((a,b)=>a.date.localeCompare(b.date));if(!records.length){status.textContent='No completed forecast comparisons yet. StormWatch saves tomorrow’s forecast when you open the app online. Check again after that forecast date has passed.';return}
 const point=await get('https://api.weather.gov/points/'+loc.lat.toFixed(4)+','+loc.lon.toFixed(4));if(token!==seq)return;
 const url=point.properties?.observationStations;if(typeof url!=='string'||!url.startsWith('https://api.weather.gov/'))throw Error('Station list unavailable');
 const directory=await get(url);if(token!==seq)return;
