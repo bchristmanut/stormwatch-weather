@@ -2,6 +2,7 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id),store=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}},read=(k,f)=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
 let latest=null,location=null;
+window.addEventListener('stormwatch:updated',e=>{latest=e.detail.weather;location=e.detail.location});
 function create(parent,title){if(!parent)return null;const box=document.createElement('section');box.className='sw-extra';const h=document.createElement('h3');h.textContent=title;box.append(h);parent.prepend(box);return box}
 function node(tag,text,parent,cls){const n=document.createElement(tag);if(text!==null)n.textContent=text;if(cls)n.className=cls;if(parent)parent.append(n);return n}
 function button(text,parent,fn){const b=node('button',text,parent);b.type='button';b.addEventListener('click',fn);return b}
@@ -48,5 +49,4 @@ if(scene){node('p','Choose how animated weather backgrounds behave. Reduced Moti
 const row=node('div',null,scene,'sw-flex'),choices=[['auto','Automatic'],['still','Still background'],['subtle','Subtle motion']];let mode=read('sw-scene-v1','auto');
 function apply(){document.body.classList.toggle('sw-scene-still',mode==='still');document.body.classList.toggle('sw-scene-subtle',mode==='subtle');for(const b of row.children)b.setAttribute('aria-pressed',String(b.dataset.mode===mode));store('sw-scene-v1',mode)}
 for(const [id,label] of choices){const b=button(label,row,()=>{mode=id;apply()});b.dataset.mode=id}apply()}
-window.addEventListener('stormwatch:updated',e=>{latest=e.detail.weather;location=e.detail.location});
 })();
