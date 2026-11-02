@@ -15,7 +15,7 @@ const legend=document.createElement('div');legend.className='rp-legend';legend.s
 const legendTitle=document.createElement('div');legendTitle.className='rp-legend-title';legendTitle.textContent='Precipitation intensity · approximate';legend.before(legendTitle);
 const note=document.createElement('p');note.className='rp-warning';note.textContent='Radar frames show past observations, not future storm movement. Colors are an approximate guide; warning outlines depend on available NWS geometry.';
 controls.append(timeRow,slider,speedWrap,warningToggle,legendTitle,legend,note);
-const actions=panel.querySelector('.radar-actions');if(actions)actions.after(controls);else mapNode.after(controls);
+const actions=panel.querySelector('.radar-actions');if(actions){const labels=['Earlier frame','Play or pause radar','Later frame','Center on selected location'];[...actions.querySelectorAll('button')].forEach((button,i)=>{if(labels[i])button.setAttribute('aria-label',labels[i])})}if(actions)actions.after(controls);else mapNode.after(controls);
 const mapReady=()=>typeof sw3Map!=='undefined'&&sw3Map&&typeof L!=='undefined';
 function refreshSize(){if(mapReady())requestAnimationFrame(()=>setTimeout(()=>sw3Map.invalidateSize({pan:false}),160))}
 full.addEventListener('click',()=>{const on=panel.classList.toggle('rp-fullscreen');document.body.classList.toggle('rp-modal',on);full.textContent=on?'Close expanded map':'Expand map';full.setAttribute('aria-pressed',String(on));refreshSize()});
