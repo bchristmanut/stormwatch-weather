@@ -1,45 +1,29 @@
-/* StormWatch rain visualization: hourly forecasts, no paid service */
+/* StormWatch Rain Intelligence — hourly, accessible, swipeable forecast */
 (()=>{'use strict';
-const rain=document.getElementById('rainPanel'),summary=document.getElementById('rainSummary');
-if(!rain||!summary)return;
-const visual=document.createElement('div');visual.className='rain-visual';
-const title=document.createElement('div');title.className='rain-chart-heading';
-const heading=document.createElement('strong');heading.textContent='Precipitation · next 24 hours';
-const meta=document.createElement('span');meta.textContent='Hourly forecast';
-title.append(heading,meta);
-const chart=document.createElement('div');chart.className='rain-chart';chart.setAttribute('role','img');chart.setAttribute('aria-label','Hourly precipitation probability and amount chart');
-const times=document.createElement('div');times.className='rain-chart-times';
-const key=document.createElement('div');key.className='rain-chart-key';
-const legendA=document.createElement('span');legendA.innerHTML='<i></i>Expected rain';
-const legendB=document.createElement('span');legendB.innerHTML='<i class="prob-key"></i>Rain chance';
-key.append(legendA,legendB);
-const readout=document.createElement('div');readout.className='rain-readout';readout.setAttribute('aria-live','polite');const hint=document.createElement('p');hint.className='rain-swipe-hint';hint.textContent='Slide across the chart to inspect each hour';const note=document.createElement('p');note.className='rain-highlight';
-visual.append(title,chart,times,key,readout,hint,note);summary.before(visual);let samples=[];let active=0;function inspect(index){if(!samples.length)return;active=Math.max(0,Math.min(samples.length-1,index));const sample=samples[active];for(const [n,column] of [...chart.children].entries())column.classList.toggle('is-selected',n===active);readout.replaceChildren();const left=document.createElement('div');const right=document.createElement('div');right.className='rain-reading';const a=document.createElement('strong');a.textContent=displayHour(sample.time);const b=document.createElement('span');b.textContent='Selected forecast hour';left.append(a,b);const c=document.createElement('strong');c.textContent=sample.chance+'% chance';const d=document.createElement('span');d.textContent=sample.amount.toFixed(2)+' in expected';right.append(c,d);readout.append(left,right)}function slide(clientX){const rect=chart.getBoundingClientRect();if(rect.width>0)inspect(Math.floor((clientX-rect.left)/rect.width*samples.length))}chart.addEventListener('pointerdown',event=>{slide(event.clientX);if(event.pointerType!=='touch')chart.setPointerCapture(event.pointerId)});chart.addEventListener('pointermove',event=>{if(event.pointerType==='mouse'&&event.buttons===0)return;slide(event.clientX)});chart.addEventListener('touchmove',event=>{if(event.touches[0])slide(event.touches[0].clientX)},{passive:true});
-function displayHour(iso){const hour=Number(iso.slice(11,13));return ((hour+11)%12+1)+(hour<12?' AM':' PM')}
-function render(weather){
- const h=weather?.hourly,c=weather?.current;if(!h||!c)return;
- const first=Math.max(0,h.time.findIndex(t=>t>=c.time.slice(0,13)));
- const points=Array.from({length:24},(_,n)=>first+n).filter(i=>i<h.time.length);
- if(!points.length)return;
- const amount=i=>Math.max(0,Number(h.precipitation?.[i])||0);
- const chance=i=>Math.max(0,Math.min(100,Number(h.precipitation_probability?.[i])||0));
- const maxAmount=Math.max(.02,...points.map(amount));
- chart.replaceChildren();times.replaceChildren();samples=[];
- let total=0,peak=0,peakIndex=points[0];
- for(const i of points){
-  samples.push({time:h.time[i],chance:chance(i),amount:amount(i)});
-  total+=amount(i);if(chance(i)>peak){peak=chance(i);peakIndex=i}
-  const col=document.createElement('div');col.className='rain-column';
-  const probability=document.createElement('div');probability.className='rain-prob';probability.style.height=(chance(i)*.3)+'%';
-  const rainfall=document.createElement('div');rainfall.className='rain-amount';rainfall.style.height=(amount(i)/maxAmount*70)+'%';
-  col.title=displayHour(h.time[i])+': '+chance(i)+'% chance, '+amount(i).toFixed(2)+' in expected';
-  col.append(probability,rainfall);chart.append(col);
- }
- for(const offset of [0,6,12,18,23]){const index=points[Math.min(offset,points.length-1)];const el=document.createElement('span');el.textContent=displayHour(h.time[index]);times.append(el)}
- chart.setAttribute('aria-label','Next 24 hours: maximum rain chance '+peak+' percent; expected total '+total.toFixed(2)+' inches');
- meta.textContent=total.toFixed(2)+' in expected';
- inspect(0);
- note.textContent=peak===0?'Little or no rain is forecast over the next 24 hours.':'Highest rain chance: '+peak+'% around '+displayHour(h.time[peakIndex])+'. Expected total: '+total.toFixed(2)+' in.';
+const panel=document.getElementById('rainPanel'),summary=document.getElementById('rainSummary');
+if(!panel||!summary)return;
+const visual=document.createElement('section');visual.className='rain-intelligence';
+visual.innerHTML='<div class="ri-heading"><div><span class="ri-eyebrow">PRECIPITATION OUTLOOK</span><h3 id="riHeadline">Loading rain forecast…</h3></div><span class="ri-cloud" aria-hidden="true">☔</span></div><div class="ri-metrics"><div><span>Next 24h total</span><strong id="riTotal">—</strong></div><div><span>Peak chance</span><strong id="riPeak">—</strong></div><div><span>Wettest hour</span><strong id="riWettest">—</strong></div></div><div class="ri-chart-top"><strong>24-hour precipitation</strong><span>Drag to explore</span></div><div class="ri-plot" id="riPlot" tabindex="0" role="slider" aria-label="Inspect hourly precipitation forecast" aria-valuemin="0" aria-valuemax="23" aria-valuenow="0"><div class="ri-grid"></div><div class="ri-bars" id="riBars"></div><div class="ri-cursor" id="riCursor"><span class="ri-cursor-dot"></span></div></div><div class="ri-times" id="riTimes"></div><div class="ri-readout" id="riReadout" aria-live="off"></div><div class="ri-legend"><span><i class="ri-light"></i>Light</span><span><i class="ri-moderate"></i>Moderate</span><span><i class="ri-heavy"></i>Heavy</span></div><p class="ri-footnote">Hourly forecast estimates, not minute-by-minute radar observations. Rain amounts may include other precipitation.</p><button class="ri-radar" type="button" id="riRadar">◎ View precipitation radar</button>';
+summary.before(visual);
+const get=id=>document.getElementById(id),plot=get('riPlot'),bars=get('riBars'),cursor=get('riCursor'),times=get('riTimes'),readout=get('riReadout');
+let points=[],selectedIndex=0,dragging=false;
+const hour=iso=>{const h=Number(iso.slice(11,13));return ((h+11)%12+1)+(h>=12?' PM':' AM')};
+const percent=x=>Math.max(0,Math.min(100,Number(x)||0));
+const inches=x=>Math.max(0,Number(x)||0);
+function choose(index){if(!points.length)return;selectedIndex=Math.max(0,Math.min(points.length-1,index));const p=points[selectedIndex];cursor.style.left=((selectedIndex+.5)/points.length*100)+'%';for(const [i,col] of [...bars.children].entries())col.classList.toggle('ri-active',i===selectedIndex);readout.replaceChildren();const left=document.createElement('div');const right=document.createElement('div');right.className='ri-values';const t=document.createElement('strong');t.textContent=hour(p.time);const sub=document.createElement('span');sub.textContent='Selected forecast hour';left.append(t,sub);const chance=document.createElement('strong');chance.textContent=p.chance+'% chance';const amount=document.createElement('span');amount.textContent=p.amount.toFixed(2)+' in expected';right.append(chance,amount);readout.append(left,right);plot.setAttribute('aria-valuemax',String(points.length-1));plot.setAttribute('aria-valuenow',String(selectedIndex));plot.setAttribute('aria-valuetext',hour(p.time)+', '+p.chance+' percent chance, '+p.amount.toFixed(2)+' inches expected')}
+function selectX(x){const rect=plot.getBoundingClientRect();if(rect.width)choose(Math.floor((x-rect.left)/rect.width*points.length))}
+plot.addEventListener('pointerdown',e=>{dragging=true;selectX(e.clientX);try{plot.setPointerCapture(e.pointerId)}catch{}});
+plot.addEventListener('pointermove',e=>{if(dragging)selectX(e.clientX)});
+for(const type of ['pointerup','pointercancel','lostpointercapture'])plot.addEventListener(type,()=>{dragging=false});
+plot.addEventListener('keydown',e=>{let next=selectedIndex;if(e.key==='ArrowRight'||e.key==='ArrowUp')next++;else if(e.key==='ArrowLeft'||e.key==='ArrowDown')next--;else if(e.key==='Home')next=0;else if(e.key==='End')next=points.length-1;else return;e.preventDefault();choose(next)});
+get('riRadar').addEventListener('click',()=>{const tab=document.querySelector('.app-tabs button[data-screen="radar"]');if(tab)tab.click();else document.getElementById('radarPanel')?.scrollIntoView({behavior:'smooth'})});
+function render(weather){const h=weather?.hourly,c=weather?.current;if(!h?.time?.length||!c?.time)return;let start=h.time.findIndex(t=>t>=c.time.slice(0,13));if(start<0)start=0;points=Array.from({length:24},(_,n)=>start+n).filter(i=>i<h.time.length).map(i=>({time:h.time[i],chance:percent(h.precipitation_probability?.[i]),amount:inches(h.precipitation?.[i])}));if(!points.length)return;
+const total=points.reduce((s,p)=>s+p.amount,0),peak=Math.max(...points.map(p=>p.chance)),wettest=points.reduce((a,p)=>p.amount>a.amount?p:a,points[0]);get('riTotal').textContent=total.toFixed(2)+' in';get('riPeak').textContent=peak+'%';get('riWettest').textContent=wettest.amount>0?hour(wettest.time):'None';
+const firstWet=points.find(p=>p.chance>=40),firstHeavy=points.find(p=>p.amount>=.1);let headline='Little precipitation expected';if(firstHeavy)headline='Heavier precipitation possible around '+hour(firstHeavy.time);else if(firstWet)headline='Precipitation possible around '+hour(firstWet.time);else if(total>.01)headline='Light precipitation possible';get('riHeadline').textContent=headline;
+const max=Math.max(.02,...points.map(p=>p.amount));bars.replaceChildren();times.replaceChildren();
+for(const p of points){const col=document.createElement('div');col.className='ri-column';const bar=document.createElement('div');bar.className='ri-bar '+(p.amount>=.1?'ri-heavy':p.amount>=.03?'ri-moderate':'ri-light');bar.style.height=Math.max(2,p.amount/max*100)+'%';bar.style.opacity=p.amount>0?'1':'.23';col.append(bar);bars.append(col)}
+for(const offset of [0,6,12,18,23]){const item=document.createElement('span');item.textContent=hour(points[Math.min(offset,points.length-1)].time);times.append(item)}
+choose(0);
 }
-window.addEventListener('stormwatch:updated',event=>render(event.detail.weather));
+window.addEventListener('stormwatch:updated',e=>render(e.detail.weather));
 })();
