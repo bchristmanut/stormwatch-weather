@@ -394,3 +394,15 @@ body.sw-loading #status{color:#bcecff}
 .sw-inspect-marker{background:#0a3155;color:white;border:2px solid #b7efff;border-radius:50%;width:18px;height:18px;box-shadow:0 0 0 6px #80dcff33}
 
 body.sw-scene-still .sky-scene *,body.sw-scene-still .sky-scene *::before,body.sw-scene-still .sky-scene *::after{animation:none!important;transition:none!important}body.sw-scene-subtle .sky-scene *{animation-duration:30s!important}body.sw-scene-still .sky-rain{opacity:0!important}
+
+/* Safari timeline layout: taller chart and focused 12/24/48-hour views */
+.wt-panel{box-sizing:border-box;min-width:0;max-width:100%;overflow:hidden}
+.wt-top>div:first-child{min-width:0;flex:1}.wt-top h3{line-height:1.3}.wt-time{flex:0 1 112px;overflow-wrap:anywhere}
+.wt-chart{height:270px;min-height:270px;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.wt-chart svg{width:100%;height:100%;max-width:100%;display:block}
+.wt-navigation{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:7px 0}
+.wt-navigation button,.wt-zoom button{min-height:44px;padding:9px 13px;border:1px solid #a6ddff65;border-radius:12px;background:#a1d8ff20;color:#f0faff;font-size:13px}
+.wt-navigation button:disabled{opacity:.35}.wt-window-label{font-size:12px;color:#d1eaff;text-align:center}
+.wt-zoom{display:flex;gap:8px;margin:10px 0 4px}.wt-zoom button{flex:1}.wt-zoom button[aria-pressed=true]{background:#b5e8ff;color:#092a4b;font-weight:750}
+.wt-axis{gap:8px}.wt-axis span{font-size:10px;min-width:0}.wt-axis span:nth-child(2){text-align:center}.wt-axis span:last-child{text-align:right}
+@media(max-width:390px){.wt-panel{padding:12px}.wt-chart{height:245px;min-height:245px}.wt-top{flex-wrap:wrap}.wt-time{text-align:left;flex:1 1 100%}.wt-details{grid-template-columns:repeat(2,minmax(0,1fr))}}
