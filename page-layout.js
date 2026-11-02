@@ -10,7 +10,8 @@ const screens=[
 ];
 const pages=new Map();
 const sw51Grid=document.createElement('section');sw51Grid.className='sw51-bento';
-const sw51Values={};for(const key of ['UV Index','Wind','Humidity','Sunrise']){const tile=document.createElement('article');tile.className='sw51-tile';const label=document.createElement('span');label.textContent=key;const value=document.createElement('strong');value.textContent='—';const glyph=document.createElement('span');glyph.className='sw52-icon';glyph.textContent={'UV Index':'☀','Wind':'➤','Humidity':'◉','Sunrise':'↗'}[key];glyph.setAttribute('aria-hidden','true');tile.append(label,glyph,value);sw51Grid.append(tile);sw51Values[key]=value}
+const sw51Values={};
+const sw54Icons={sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>',wind:'<path d="M12 2l6 18-6-4-6 4z"/>',drop:'<path d="M12 2C9 7 5 11 5 15a7 7 0 0 0 14 0c0-4-4-8-7-13z"/>',sunrise:'<path d="M2 18h20M12 3v10m-4-4 4 4 4-4M4 15h2m12 0h2"/>'};for(const key of ['UV Index','Wind','Humidity','Sunrise']){const tile=document.createElement('article');tile.className='sw51-tile';const label=document.createElement('span');label.textContent=key;const value=document.createElement('strong');value.textContent='—';const glyph=document.createElement('span');glyph.className='sw52-icon';glyph.textContent={'UV Index':'☀','Wind':'➤','Humidity':'◉','Sunrise':'↗'}[key];glyph.setAttribute('aria-hidden','true');tile.append(label,glyph,value);sw51Grid.append(tile);sw51Values[key]=value}
 for(const item of screens){
  const page=document.createElement('section');page.className='sw-page';page.id='sw-page-'+item.id;page.dataset.page=item.id;page.setAttribute('aria-label',item.title);
  const head=document.createElement('div');head.className='sw-page-heading';
