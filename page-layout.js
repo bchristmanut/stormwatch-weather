@@ -9,6 +9,8 @@ const screens=[
  {id:'details',title:'Weather details',sub:'More measurements, daylight and nearby observation stations.',panels:['detailsPanel','sunPanel','stationPanel']}
 ];
 const pages=new Map();
+const sw59=document.createElement('section');sw59.className='sw59-overview';sw59.setAttribute('aria-label','Weather measurement explanations');sw59.innerHTML='<article class="sw59-card"><h3>Wind direction</h3><div class="sw59-compass"><span>N</span><span class="sw59-arrow">↑</span><span>S</span></div><strong class="sw59-wind">—</strong><p>Direction wind comes from, measured clockwise from north.</p></article><article class="sw59-card"><h3>UV exposure</h3><strong class="sw59-uv">—</strong><div class="sw59-uv-meter"><span></span></div><p class="sw59-uv-advice">Waiting for UV forecast…</p></article><article class="sw59-card sw59-daylight"><h3>Daylight</h3><strong class="sw59-daylight-label">—</strong><div class="sw59-daylight-track"><span></span></div><p class="sw59-sun-times">Sunrise and sunset times pending.</p></article>';
+
 const sw58Rain=document.createElement('section');sw58Rain.className='sw58-rain';sw58Rain.setAttribute('aria-label','Upcoming precipitation forecast');const sw58RainTitle=document.createElement('strong');sw58RainTitle.textContent='Rain outlook';const sw58RainText=document.createElement('p');sw58RainText.textContent='Waiting for hourly forecast…';sw58Rain.append(sw58RainTitle,sw58RainText);
 const sw51Grid=document.createElement('section');sw51Grid.className='sw51-bento';
 const sw51Values={};
@@ -21,7 +23,7 @@ for(const item of screens){
  const sub=document.createElement('p');sub.textContent=item.sub;
  head.append(label,title,sub);page.append(head);
  for(const id of item.panels){const el=document.getElementById(id);if(el)page.append(el)}
- if(item.id==='home'){const agent=document.getElementById('weatherAgent');if(agent){const agentDetails=document.createElement('details');agentDetails.className='sw58-agent-wrap';const agentSummary=document.createElement('summary');agentSummary.textContent='Weather Agent · Detailed briefing';agent.before(agentDetails);agentDetails.append(agentSummary,agent)}const hero=document.getElementById('forecastSection');if(hero)hero.after(sw58Rain);const stats=document.getElementById('conditionsSummary');if(stats)stats.after(sw51Grid);else page.append(sw51Grid)}
+ if(item.id==='details')page.insertBefore(sw59,page.querySelector('#detailsPanel'));if(item.id==='home'){const agent=document.getElementById('weatherAgent');if(agent){const agentDetails=document.createElement('details');agentDetails.className='sw58-agent-wrap';const agentSummary=document.createElement('summary');agentSummary.textContent='Weather Agent · Detailed briefing';agent.before(agentDetails);agentDetails.append(agentSummary,agent)}const hero=document.getElementById('forecastSection');if(hero)hero.after(sw58Rain);const stats=document.getElementById('conditionsSummary');if(stats)stats.after(sw51Grid);else page.append(sw51Grid)}
  pages.set(item.id,page);main.insertBefore(page,main.querySelector('footer'));
 }
 const tabs=[...document.querySelectorAll('.app-tabs button[data-screen]')];
