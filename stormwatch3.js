@@ -22,7 +22,7 @@ function sw3RenderFrame(){
  sw3Pending=layer;
  if(!sw3Map.hasLayer(layer))layer.addTo(sw3Map);
  let settled=false;
- function finish(){if(settled||token!==sw3FrameToken)return;settled=true;layer.setOpacity(.78);if(sw3Radar&&sw3Radar!==layer&&sw3Map.hasLayer(sw3Radar))sw3Map.removeLayer(sw3Radar);sw3Radar=layer;sw3Pending=null;sw3('radarStatus').textContent='Radar observation: '+new Date(frame.time*1000).toLocaleString()+' · Past observations, not a forecast';window.dispatchEvent(new CustomEvent('stormwatch:radarframe',{detail:{index:sw3Index,count:sw3Frames.length,time:frame.time}}));sw3PreloadNext()}
+ function finish(){if(settled||token!==sw3FrameToken)return;settled=true;layer.setOpacity(Number.isFinite(window.swRadarOpacity)?window.swRadarOpacity:.78);if(sw3Radar&&sw3Radar!==layer&&sw3Map.hasLayer(sw3Radar))sw3Map.removeLayer(sw3Radar);sw3Radar=layer;sw3Pending=null;sw3('radarStatus').textContent='Radar observation: '+new Date(frame.time*1000).toLocaleString()+' · Past observations, not a forecast';window.dispatchEvent(new CustomEvent('stormwatch:radarframe',{detail:{index:sw3Index,count:sw3Frames.length,time:frame.time}}));sw3PreloadNext()}
  layer.once('load',finish);
  if(sw3Radar===layer)setTimeout(finish,50);
  setTimeout(finish,Math.min(2200,Math.max(1100,sw3Speed-100)));
