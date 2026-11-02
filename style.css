@@ -561,3 +561,6 @@ body[data-screen=home] .sw-page-heading{margin-bottom:8px}body[data-screen=home]
 
 /* v61 unit controls */
 .sw61-units{margin-top:18px;border-top:1px solid #ffffff32;padding-top:16px}.sw61-units h3{font-size:17px;margin:0 0 8px}.sw61-units p{font-size:12px;color:#d6eaf8}.sw61-units .sw60-option select{max-width:65%;font-size:13px}#daily .temps{font-size:12px;white-space:nowrap}@media(max-width:380px){.sw61-units .sw60-option{font-size:12px}.sw61-units .sw60-option select{max-width:61%;font-size:12px}}
+
+/* v62 unit presets */
+.sw62-presets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0}.sw62-presets button{min-height:44px;border-radius:12px;background:#ffffff1d;border:1px solid #ffffff42;color:inherit;font-weight:700}.sw62-presets button:focus-visible{outline:2px solid #9ce6ff;outline-offset:2px}
