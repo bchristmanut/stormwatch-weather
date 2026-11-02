@@ -4,9 +4,9 @@ const panel=document.getElementById('radarPanel');if(!panel)return;
 const box=document.createElement('section');box.className='su28';box.innerHTML='<h3>Radar visibility & history</h3><label class="su28-opacity">Radar opacity <input type="range" min="10" max="100" step="5" value="80" aria-label="Radar layer opacity"><output>80%</output></label><div class="su28-radar-status" role="status">Waiting for radar imagery…</div><p>Radar frames show observed precipitation in the past. Opacity only changes map visibility, not precipitation intensity.</p>';
 const map=document.getElementById('radarMap');if(map)map.before(box);else panel.prepend(box);
 const slider=box.querySelector('input'),out=box.querySelector('output'),status=box.querySelector('.su28-radar-status');
-let opacity=.8;
+let opacity=.8;try{const saved=Number(localStorage.getItem('stormwatch-radar-opacity'));if(Number.isFinite(saved)&&saved>=.1&&saved<=1)opacity=saved}catch{}slider.value=String(Math.round(opacity*100));out.value=slider.value+'%';window.swRadarOpacity=opacity;
 function updateLayers(){if(typeof sw3Map==='undefined'||!sw3Map)return;sw3Map.eachLayer(layer=>{if(!layer?.options?.attribution?.includes('RainViewer'))return;if(layer===sw3Radar)layer.setOpacity(opacity)})}
-slider.addEventListener('input',()=>{opacity=Number(slider.value)/100;out.value=slider.value+'%';updateLayers()});
+slider.addEventListener('input',()=>{opacity=Number(slider.value)/100;window.swRadarOpacity=opacity;try{localStorage.setItem('stormwatch-radar-opacity',String(opacity))}catch{}out.value=slider.value+'%';updateLayers()});
 window.addEventListener('stormwatch:radarframe',e=>{const time=e.detail?.time;status.textContent=time?'Observed radar frame: '+new Date(time*1000).toLocaleString()+' · '+(e.detail.index+1)+' of '+e.detail.count:'Radar frame unavailable';requestAnimationFrame(updateLayers)});
 window.addEventListener('stormwatch:radarready',()=>{status.textContent='Radar imagery available. Scrub the radar timeline to review past frames.';requestAnimationFrame(updateLayers)});
 const daily=document.getElementById('dailyPanel');if(!daily)return;
