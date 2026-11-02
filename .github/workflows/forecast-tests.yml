@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'forecast-glance.js'
+      - 'weather-agent-chat.js'
       - 'tests/**'
       - '.github/workflows/forecast-tests.yml'
   pull_request:
@@ -23,3 +24,7 @@ jobs:
         run: node --check forecast-glance.js
       - name: Run forecast regression scenarios
         run: node tests/forecast-glance.test.cjs
+      - name: Check Weather Agent syntax
+        run: node --check weather-agent-chat.js
+      - name: Run Weather Agent scenarios
+        run: node tests/weather-agent-chat.test.cjs
