@@ -355,3 +355,21 @@ body.sw-loading #status{color:#bcecff}
 .sw-severe-card summary{font-size:13px;cursor:pointer;min-height:30px}
 .sw-severe-card p{font-size:12px;white-space:pre-line;line-height:1.55}
 .sw-severe-card a{color:#9fe4ff;font-size:12px}
+
+/* Interactive 48-hour weather timeline */
+.wt-panel{margin:12px 0 18px;padding:16px;border:1px solid #a9dcff55;border-radius:20px;background:linear-gradient(150deg,#1b54859c,#0c2b539c);color:#f4faff}
+.wt-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.wt-top h3{margin:0;font-size:18px}.wt-top p{margin:4px 0;color:#c6e1f3;font-size:12px}
+.wt-time{font-size:12px;color:#d2ebff;text-align:right}
+.wt-modes{display:flex;gap:7px;overflow-x:auto;padding:12px 0;scrollbar-width:thin}
+.wt-modes button{flex:0 0 auto;min-height:44px;border-radius:22px;padding:9px 13px;border:1px solid #a6ddff4a;background:#a1d8ff18;color:#e4f5ff;font-size:12px}
+.wt-modes button[aria-pressed=true]{background:#b5e8ff;color:#092a4b;font-weight:750}
+.wt-chart{position:relative;height:205px;touch-action:pan-y;user-select:none;-webkit-user-select:none;border-radius:14px;background:#9cdbff0b;outline-offset:4px;overflow:hidden}
+.wt-chart svg{width:100%;height:100%;display:block;overflow:visible}
+.wt-chart:focus-visible{outline:3px solid #9fe9ff}
+.wt-axis{display:flex;justify-content:space-between;color:#c9e3f5;font-size:11px;padding:7px 2px}
+.wt-details{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.wt-detail{padding:10px 8px;background:#a4dbff17;border:1px solid #b8e7ff24;border-radius:12px;min-width:0}
+.wt-detail small{display:block;font-size:10px;color:#c9e1f1}.wt-detail strong{display:block;font-size:16px;margin-top:5px;overflow-wrap:anywhere}
+.wt-hint{font-size:11px;color:#c6deef;margin:10px 0 0}
+@media(max-width:360px){.wt-details{grid-template-columns:repeat(2,minmax(0,1fr))}.wt-panel{padding:12px}}
