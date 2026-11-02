@@ -1,6 +1,6 @@
 /* StormWatch offline shell v25. Network first for pages, cached fallback for offline use. */
-const CACHE='stormwatch-shell-v30';
-const ASSETS=['./','./index.html','./style.css','./app.js','./stormwatch3.js','./stormwatch4.js','./stormwatch5.js','./stormwatch6.js','./stormwatch7.js','./radarpro.js','./locations.js','./forecast-confidence.js','./iphone-polish.js','./severe-weather.js','./weather-timeline.js','./interactive-extras.js','./home-refresh.js','./stormwatch25.js','./weather-advisor.js','./stormwatch-ultimate.js','./stormwatch28.js','./stormwatch29.js','./stormwatch30.js','./manifest.webmanifest','./icon.png'];
+const CACHE='stormwatch-shell-v31';
+const ASSETS=['./','./index.html','./style.css','./app.js','./stormwatch3.js','./stormwatch4.js','./stormwatch5.js','./stormwatch6.js','./stormwatch7.js','./radarpro.js','./locations.js','./forecast-confidence.js','./iphone-polish.js','./severe-weather.js','./weather-timeline.js','./interactive-extras.js','./home-refresh.js','./stormwatch25.js','./weather-advisor.js','./stormwatch-ultimate.js','./stormwatch28.js','./stormwatch29.js','./stormwatch30.js','./stormwatch31.js','./manifest.webmanifest','./icon.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)));self.skipWaiting()});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('stormwatch-shell-')&&key!==CACHE).map(key=>caches.delete(key)))));self.clients.claim()});
 self.addEventListener('fetch',event=>{
