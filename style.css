@@ -286,3 +286,17 @@ body.rp-modal{overflow:hidden}
 #refresh:disabled{opacity:.45;cursor:wait}
 
 .rp-speed{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:#d8ecff;margin:9px 0 13px}.rp-speed select{background:#153f73;color:#fff;border:1px solid #91cfff88;border-radius:9px;padding:8px 10px;font-size:13px}
+
+/* Saved Cities */
+.sw-locations{margin:11px 0 16px;padding:12px;border-radius:18px;border:1px solid #b7dfff55;background:#19477888;backdrop-filter:blur(12px)}
+.sw-locations-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sw-locations-head strong{font-size:13px;letter-spacing:.2px}
+.sw-locations-head button{background:#83d3ff2a;color:#d7f4ff;border:1px solid #8fd9ff66;border-radius:12px;padding:8px 11px;font-size:12px}
+.sw-location-list{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;padding:12px 0 2px;overscroll-behavior-x:contain}
+.sw-location-item{display:flex;align-items:center;flex:0 0 auto;border:1px solid #afdfff50;border-radius:14px;background:#73b5ff1b;overflow:hidden;max-width:250px}
+.sw-location-item.active{border-color:#9beaff;background:#78d4ff36}
+.sw-location-item button{background:transparent;border:0;color:#f1f9ff}
+.sw-location-select{padding:10px 10px 10px 12px;max-width:195px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
+.sw-location-remove{padding:9px 11px;border-left:1px solid #afdfff35;font-size:17px;line-height:1}
+.sw-location-empty{font-size:12px;color:#c5dcf2;padding:8px 0}
+.sw-location-message{font-size:11px;color:#c4e7ff;margin-top:7px}
