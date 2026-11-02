@@ -1,0 +1,25 @@
+name: Forecast regression tests
+on:
+  push:
+    paths:
+      - 'forecast-glance.js'
+      - 'tests/**'
+      - '.github/workflows/forecast-tests.yml'
+  pull_request:
+    paths:
+      - 'forecast-glance.js'
+      - 'tests/**'
+      - '.github/workflows/forecast-tests.yml'
+  workflow_dispatch:
+jobs:
+  forecast-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check forecast JavaScript syntax
+        run: node --check forecast-glance.js
+      - name: Run forecast regression scenarios
+        run: node tests/forecast-glance.test.cjs
