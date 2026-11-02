@@ -300,3 +300,17 @@ body.rp-modal{overflow:hidden}
 .sw-location-remove{padding:9px 11px;border-left:1px solid #afdfff35;font-size:17px;line-height:1}
 .sw-location-empty{font-size:12px;color:#c5dcf2;padding:8px 0}
 .sw-location-message{font-size:11px;color:#c4e7ff;margin-top:7px}
+
+/* Forecast confidence: transparent model comparison */
+.sw-confidence{margin:14px 0;padding:16px;border-radius:19px;background:linear-gradient(130deg,#184b7b9c,#102c5399);border:1px solid #9fdcff57;color:#edf7ff}
+.sw-confidence h3{font-size:17px;margin:0 0 6px}
+.sw-confidence p{font-size:12px;line-height:1.55;color:#d0e4f5;margin:7px 0}
+.sw-confidence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0}
+.sw-confidence-tile{background:#9bd5ff17;border:1px solid #b4e1ff33;border-radius:12px;padding:10px;min-width:0}
+.sw-confidence-tile small{display:block;color:#c3d9ec;font-size:11px}
+.sw-confidence-tile strong{display:block;font-size:18px;margin-top:4px}
+.sw-confidence-table{width:100%;border-collapse:collapse;font-size:12px}
+.sw-confidence-table th,.sw-confidence-table td{padding:9px 5px;text-align:left;border-bottom:1px solid #b5ddff2c}
+.sw-confidence-table th{color:#bdd9ed;font-weight:600}
+.sw-confidence details summary{cursor:pointer;font-size:12px;color:#b9e9ff;padding:9px 0}
+.sw-confidence .sw-confidence-status{color:#d1e7f7}
