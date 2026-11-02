@@ -4,7 +4,7 @@ const main=document.querySelector('main'),status=document.getElementById('status
 const screens=[
  {id:'home',title:'Your weather',sub:'Current conditions, your weather agent and the next 24 hours.',panels:['forecastSection','weatherAgent','conditionsSummary','hourlyPanel']},
  {id:'radar',title:'Live radar',sub:'Explore precipitation movement, animation and map controls.',panels:['radarPanel']},
- {id:'forecast',title:'Forecast & rain',sub:'Hourly rain details, the 16-day outlook and forecast confidence.',panels:['rainPanel','dailyPanel']},
+ {id:'forecast',title:'Forecast & rain',sub:'Hourly rain details, the 10-day outlook, hourly precipitation and forecast confidence.',panels:['rainPanel','dailyPanel']},
  {id:'alerts',title:'Weather alerts',sub:'Official warnings and severe-weather information for your location.',panels:['alertPanel']},
  {id:'details',title:'Weather details',sub:'More measurements, daylight and nearby observation stations.',panels:['detailsPanel','sunPanel','stationPanel']}
 ];
