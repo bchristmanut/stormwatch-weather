@@ -9,7 +9,7 @@ const submit=document.createElement('button');submit.type='button';submit.textCo
 const response=document.createElement('p');response.className='sw-ask-answer';response.setAttribute('role','status');response.textContent='Choose a question or type your own.';
 const form=document.createElement('form');form.className='sw-ask-form';form.append(input,submit);
 wrap.append(title,choices,form,response);agent.append(wrap);
-let latest=null,lastQuestion='';
+let latest=null,lastQuestion='',lastTopic='rain';
 const valid=x=>typeof x==='number'&&Number.isFinite(x);
 const hour=s=>{const n=Number(s.slice(11,13));return(n%12||12)+(n<12?' AM':' PM')};
 const questions=['When will it rain?','How much rain is expected?','What is the biggest weather concern?','Is it good to be outside?','Will it get warmer?'];
@@ -23,7 +23,7 @@ const storms=rows.filter(x=>[95,96,99].includes(x.code)),wind=rows.filter(x=>val
 const tempStart=rows[0]?.temp,tempEnd=rows.at(-1)?.temp,change=valid(tempStart)&&valid(tempEnd)?Math.round(tempEnd-tempStart):null;
 const rainText=first?'Precipitation is possible around '+hour(first.t)+(valid(first.p)?' ('+Math.round(first.p)+'% hourly chance)':'')+'.':'No strong precipitation signal in the next 12 hours.';
 const concern=storms.length?'Thunderstorms are forecast around '+hour(storms[0].t)+'. Check official alerts.':wind?.wind>=30?'Strong forecast wind around '+Math.round(wind.wind)+' mph near '+hour(wind.t)+'.':first&&peak?.p>=70?'Elevated precipitation chance up to '+Math.round(peak.p)+'%.':'No standout concern detected in the next 12 forecast hours. This does not mean conditions are risk-free.';
-const s=q.toLowerCase();
+const s=q.toLowerCase();if(/what about|how about|and then/.test(s)&&!/rain|storm|wind|temperature|warm|cold|outside/.test(s))q=lastTopic+' '+q;
 if(/how much|amount|total|inches|accumulation/.test(s))return amounts.length===rows.length?'Forecast precipitation over the next 12 hours: '+total.toFixed(2)+' inches. This is a model estimate.':'Some hourly precipitation amounts are missing, so a reliable 12-hour total is unavailable.';
 if(/when|rain|precipitation|shower|wet/.test(s))return rainText+(peak?' Peak hourly precipitation chance: '+Math.round(peak.p)+'% around '+hour(peak.t)+'.':'');
 if(/concern|danger|storm|severe|alert|warning|risk/.test(s))return concern+' For current official warnings, open the Alerts tab; this answer does not independently verify active warnings.';
@@ -32,7 +32,7 @@ if(/warm|cold|temperature|hot|cool|degrees/.test(s))return change===null?'Temper
 if(/wind|gust|breez/.test(s))return wind?'Highest available hourly forecast wind: '+Math.round(wind.wind)+' mph around '+hour(wind.t)+'. Gusts may be higher.':'Hourly wind information is unavailable.';
 return 'I can answer questions about rain timing, precipitation amounts, temperature, wind, storms, and outdoor plans. Try one of the suggested questions.';
 }
-function ask(q){lastQuestion=q;response.textContent=answer(q)}
+function ask(q){lastQuestion=q;if(/rain|precipitation/.test(q.toLowerCase()))lastTopic='rain';else if(/wind/.test(q.toLowerCase()))lastTopic='wind';else if(/warm|cold|temperature/.test(q.toLowerCase()))lastTopic='temperature';response.textContent=answer(q)}
 for(const q of questions){const b=document.createElement('button');b.type='button';b.textContent=q;b.addEventListener('click',()=>{input.value=q;ask(q)});choices.append(b)}
 form.addEventListener('submit',e=>{e.preventDefault();const q=input.value.trim();if(q)ask(q)});
 submit.addEventListener('click',()=>{const q=input.value.trim();if(q)ask(q)});
