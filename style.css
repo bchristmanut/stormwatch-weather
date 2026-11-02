@@ -498,3 +498,26 @@ main{width:100%;min-width:0;padding-bottom:calc(110px + env(safe-area-inset-bott
 
 /* v46 interactive weather questions */
 .sw-ask{margin-top:16px;border-top:1px solid #8bd7ff55;padding-top:14px}.sw-ask h3{font-size:16px;margin:0 0 10px}.sw-ask-choices{display:flex;flex-wrap:wrap;gap:7px}.sw-ask-choices button{font-size:12px;padding:9px 11px;border-radius:18px;border:1px solid #8bd7ff66;background:#143d60;color:#e9f6ff;min-height:38px}.sw-ask-form{display:flex;gap:7px;margin:12px 0}.sw-ask-form input{flex:1;min-width:0;padding:12px;border-radius:10px;border:1px solid #8bd7ff66;background:#071f36;color:#fff;font-size:14px}.sw-ask-form button{min-height:44px;padding:10px 15px;border-radius:10px}.sw-ask-answer{font-size:14px;line-height:1.6;background:#092a45;border-radius:12px;padding:13px;margin:0;white-space:pre-wrap}
+
+/* v50: focused five-page iPhone layout */
+.sw-page[hidden]{display:none!important}
+.sw-page{display:flex;flex-direction:column;gap:14px;min-width:0;padding:0 0 22px;animation:sw-page-in .2s ease-out}
+.sw-page-heading{padding:17px 4px 4px}
+.sw-page-eyebrow{font-size:10px;letter-spacing:.17em;font-weight:750;color:#90d8f7}
+.sw-page-heading h1{font-size:clamp(26px,7vw,34px);line-height:1.12;letter-spacing:-.04em;margin:7px 0 8px;color:#f2faff}
+.sw-page-heading p{font-size:13px;line-height:1.5;color:#bcd6e9;margin:0}
+.sw-page>.panel,.sw-page>.hero,.sw-page>.stats{margin-top:0;margin-bottom:0}
+.sw-page>.panel{border-radius:19px;padding:17px;background:linear-gradient(160deg,rgba(30,66,108,.85),rgba(12,33,62,.9));border:1px solid #9fd8fa33;box-shadow:0 8px 24px #0002}
+.sw-page .panel h2{font-size:18px;line-height:1.3;margin:0 0 12px}
+.sw-page .su42,.sw-page .sw-agent{border-radius:15px}
+body[data-screen=radar] #radarMap{height:min(66vh,620px);min-height:390px;border-radius:14px;overflow:hidden}
+body[data-screen=radar] #radarPanel{padding:14px}
+.quick-nav{display:none!important}
+.intro-copy{display:none}
+.top-eyebrow{opacity:.7}
+.app-tabs{bottom:calc(env(safe-area-inset-bottom) + 8px);background:rgba(9,27,51,.96);border:1px solid #b2dcf044;border-radius:22px}
+.app-tabs button[aria-current=page]{color:#b7efff;font-weight:750}
+.sw-page .su41{margin-top:14px}
+main{padding-bottom:calc(115px + env(safe-area-inset-bottom))}
+@keyframes sw-page-in{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.sw-page{animation:none}}
