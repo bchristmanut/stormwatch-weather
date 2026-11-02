@@ -585,3 +585,27 @@ body[data-screen=home] .sw-page-heading{margin-bottom:8px}body[data-screen=home]
 
 /* v69 seven-day forecast agreement chart */
 .sw69-chart-wrap{grid-column:1/-1;border:1px solid #ffffff30;border-radius:16px;padding:14px;background:#ffffff0c;min-width:0}.sw69-chart-wrap h3{margin:0 0 10px;font-size:15px}.sw69-chart{display:block;width:100%;height:auto;max-height:300px;overflow:visible}.sw69-legend{display:flex;flex-wrap:wrap;gap:8px 15px;margin:8px 0;font-size:11px}.sw69-legend span:before{content:'';display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--series-color);margin-right:6px}.sw69-chart-wrap p{font-size:11px;line-height:1.5;color:#d9ebf8}
+
+/* v70 — frosted glass surfaces with progressive enhancement */
+:root{--sw-glass-fill:rgba(20,48,77,.72);--sw-glass-edge:rgba(225,243,255,.24);--sw-glass-shadow:0 14px 34px rgba(0,7,22,.24),inset 0 1px 0 rgba(255,255,255,.16)}
+.hero,.panel,.stats>div,.weather-tile,.hour,.sw68-model,.sw69-chart-wrap{
+ background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.025) 48%,rgba(5,24,46,.12)),var(--sw-glass-fill);
+ border:1px solid var(--sw-glass-edge);
+ box-shadow:var(--sw-glass-shadow);
+}
+.hero{background:linear-gradient(145deg,rgba(86,172,237,.23),rgba(19,66,109,.45) 50%,rgba(8,31,58,.64));border-color:rgba(222,244,255,.34);box-shadow:0 18px 42px rgba(0,8,27,.30),inset 0 1px 0 rgba(255,255,255,.23)}
+.panel,.stats>div,.weather-tile,.hour{position:relative}
+.search input,.sw67-sources select{background:rgba(15,39,64,.78);border-color:rgba(225,243,255,.25);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.app-tabs{background:rgba(9,30,54,.86)!important;border-top:1px solid rgba(230,247,255,.25)!important;box-shadow:0 -8px 30px rgba(0,9,25,.25),inset 0 1px 0 rgba(255,255,255,.1)}
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+ .hero,.panel,.stats>div,.weather-tile,.hour,.sw68-model,.sw69-chart-wrap{-webkit-backdrop-filter:blur(18px) saturate(145%);backdrop-filter:blur(18px) saturate(145%)}
+ .app-tabs{-webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%)}
+ .search input,.sw67-sources select{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+}
+.sw-severe-card,.alert{background:rgba(71,43,26,.94)!important;border-color:rgba(255,175,84,.65)!important;box-shadow:0 6px 20px rgba(0,0,0,.22)}
+@media(prefers-reduced-transparency:reduce){
+ .hero,.panel,.stats>div,.weather-tile,.hour,.sw68-model,.sw69-chart-wrap{background:#142e4b!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+ .app-tabs{background:#10243c!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+ .search input,.sw67-sources select{background:#10253d!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+}
+@media(prefers-reduced-motion:reduce){.hero,.panel,.stats>div,.weather-tile,.hour{transition:none!important}}
